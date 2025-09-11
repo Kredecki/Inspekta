@@ -65,4 +65,7 @@ public class JwtAuthenticationStateProvider(ILocalStorageService LocalStorage) :
         claims.Add(new Claim(ClaimTypes.Name, model.Login));
         claims.Add(new Claim(ClaimTypes.Role, model.Role.ToString()));
 	}
+
+    public async Task<string> GetToken()
+        => await _localStorage.GetItemAsync<string>(TokenKey) ?? string.Empty;
 }

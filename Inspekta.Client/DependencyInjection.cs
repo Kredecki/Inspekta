@@ -10,12 +10,15 @@ public static class DependencyInjection
 	{
 		string baseUrl = configuration["URL:BaseUrl"] ?? string.Empty;
 
-		services.AddHttpClient("Inspekta", client =>
+        services.AddTransient<JwtAuthorizationMessageHandler>();
+
+        services.AddHttpClient("Inspekta", client =>
 		{
 			client.BaseAddress = new Uri(baseUrl);
-		});
+		})
+		.AddHttpMessageHandler<JwtAuthorizationMessageHandler>();
 
-		services.AddScoped(sp =>
+        services.AddScoped(sp =>
 			sp.GetRequiredService<IHttpClientFactory>().CreateClient("Inspekta")
 		);
 
