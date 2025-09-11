@@ -20,9 +20,15 @@ public static class DependencyInjection
 		);
 
 		services.AddBlazoredLocalStorage();
-		services.AddAuthorizationCore();
+		services.AddAuthorizationCore(config =>
+		{
+            foreach (var policy in AppPolicies.Policies)
+            {
+                config.AddPolicy(policy.Key, policy.Value);
+            }
+        });
 
-		services.AddScoped<JwtAuthenticationStateProvider>();
+        services.AddScoped<JwtAuthenticationStateProvider>();
 		services.AddScoped<AuthenticationStateProvider, JwtAuthenticationStateProvider>();
 
 		return services;

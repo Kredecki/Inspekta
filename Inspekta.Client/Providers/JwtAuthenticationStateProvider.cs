@@ -27,18 +27,25 @@ public class JwtAuthenticationStateProvider(ILocalStorageService LocalStorage) :
 			return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
 		}
 
-		ClaimsPrincipal? user = new(new ClaimsIdentity(ParseClaimsFromJwt(token), "jwt"));
-		return new AuthenticationState(user);
-	}
+        var claims = jwtToken.Claims.ToList();
+        CreateClaims(claims);
+
+        var user = new ClaimsPrincipal(new ClaimsIdentity(claims, "jwt"));
+        return new AuthenticationState(user);
+    }
 
 	public async Task Login(UserDto model)
 	{
 		await _localStorage.SetItemAsync(TokenKey, model.Token);
 
-		List<Claim>? claims = ParseClaimsFromJwt(model.Token).ToList();
-		claims.Add(new Claim(ClaimTypes.Name, model.Login));
+        var handler = new JwtSecurityTokenHandler();
+        var jwtToken = handler.ReadJwtToken(model.Token);
 
-		ClaimsIdentity? identity = new(claims, TokenKey);
+        var claims = jwtToken.Claims.ToList();
+
+		CreateClaims(claims, model);
+
+        ClaimsIdentity? identity = new(claims, TokenKey);
 		ClaimsPrincipal? user = new(identity);
 
 		NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(user)));
@@ -50,11 +57,12 @@ public class JwtAuthenticationStateProvider(ILocalStorageService LocalStorage) :
 		NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()))));
 	}
 
-	private static IEnumerable<Claim> ParseClaimsFromJwt(string token)
+	private static void CreateClaims(List<Claim> claims, UserDto? model = null)
 	{
-		var handler = new JwtSecurityTokenHandler();
-		var jwt = handler.ReadJwtToken(token);
+		if (model is null)
+			return;
 
-		return jwt.Claims;
+        claims.Add(new Claim(ClaimTypes.Name, model.Login));
+        claims.Add(new Claim(ClaimTypes.Role, model.Role.ToString()));
 	}
 }

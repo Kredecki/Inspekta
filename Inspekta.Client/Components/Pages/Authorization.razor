@@ -1,5 +1,6 @@
 ﻿@page "/auth"
 @layout Layout.AuthLayout.AuthLayout
+@attribute [AllowAnonymous]
 
 <div id="main-container">
 	<form @onsubmit=SignIn>

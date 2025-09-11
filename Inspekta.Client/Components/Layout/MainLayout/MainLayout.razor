@@ -1,43 +1,41 @@
 ﻿@inherits LayoutComponentBase
 
-<CascadingAuthenticationState>
-    <AuthorizeView>
-        <Authorized>
-            <div id="main-container">
-                <div id="background">
-                    <div id="finder">
-                        <div id="apps">
-                            <span @onclick="@(() => Navigation.NavigateTo("/"))">
-                                <Application Name="Panel" />
-                            </span>
+<div id="main-container">
+    <div id="background">
+        <div id="finder">
+            <div id="apps">
+                <span @onclick="@(() => Navigation.NavigateTo("/"))">
+                    <Application Name="Panel" />
+                </span>
 
-                            <span @onclick="@(() => Navigation.NavigateTo("/users"))">
-                                <Application Name="Użytkownicy" />
-                            </span>
+                <span @onclick="@(() => Navigation.NavigateTo("/users"))">
+                    <Application Name="Użytkownicy" />
+                </span>
 
-                            <span @onclick="@(() => Navigation.NavigateTo("/inspections"))">
-                                <Application Name="Przeglądy" />
-                            </span>
+                <span @onclick="@(() => Navigation.NavigateTo("/companies"))">
+                    <Application Name="Firmy" />
+                </span>
 
-                            <span @onclick="@(() => Navigation.NavigateTo("/support"))">
-                                <Application Name="Wsparcie" />
-                            </span>
+                <span @onclick="@(() => Navigation.NavigateTo("/inspections"))">
+                    <Application Name="Przeglądy" />
+                </span>
 
-                            <span @onclick="@(() => Navigation.NavigateTo("/settings"))">
-                                <Application Name="Ustawienia" />
-                            </span>
-                        </div>
+                <span @onclick="@(() => Navigation.NavigateTo("/support"))">
+                    <Application Name="Wsparcie" />
+                </span>
 
-                        <div id="footer" 
-                            class="hover" 
-                            title="Wyloguj">
-                            <img src="/img/Pwroff.png" @onclick=LogoutAsync />
-                        </div>
-                    </div>
-
-                    @Body
-                </div>
+                <span @onclick="@(() => Navigation.NavigateTo("/settings"))">
+                    <Application Name="Ustawienia" />
+                </span>
             </div>
-        </Authorized>
-    </AuthorizeView>
-</CascadingAuthenticationState>
+
+            <div id="footer" 
+                class="hover" 
+                title="Wyloguj">
+                <img src="/img/Pwroff.png" @onclick=LogoutAsync />
+            </div>
+        </div>
+
+        @Body
+    </div>
+</div>

@@ -1,8 +1,28 @@
 ﻿@using Inspekta.Client.Components.Layout.MainLayout
 @using Microsoft.AspNetCore.Components.Routing
-<Router AppAssembly="typeof(Program).Assembly" AdditionalAssemblies="new[] { typeof(Client._Imports).Assembly }">
-    <Found Context="routeData">
-        <RouteView RouteData="routeData" DefaultLayout="typeof(MainLayout)" />
-        <FocusOnNavigate RouteData="routeData" Selector="h1" />
-    </Found>
-</Router>
+<CascadingAuthenticationState>
+    <Router AppAssembly="@typeof(App).Assembly">
+        <Found Context="routeData">
+            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+                <NotAuthorized>
+                    @if (context.User.Identity?.IsAuthenticated ?? false)
+                    {
+                        <p>Brak uprawnień.</p>
+                    }
+                    else
+                    {
+						Navigation.NavigateTo("/auth");
+                    }
+                </NotAuthorized>
+                <Authorizing>
+                    <p>Autoryzacja…</p>
+                </Authorizing>
+            </AuthorizeRouteView>
+        </Found>
+        <NotFound>
+            <LayoutView Layout="@typeof(MainLayout)">
+                <p>Nie znaleziono.</p>
+            </LayoutView>
+        </NotFound>
+    </Router>
+</CascadingAuthenticationState>

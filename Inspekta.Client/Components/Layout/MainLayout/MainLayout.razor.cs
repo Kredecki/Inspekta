@@ -14,17 +14,6 @@ public partial class MainLayout
 	[Inject]
 	private JwtAuthenticationStateProvider? AuthProvider { get; set; }
 
-	protected override async Task OnInitializedAsync()
-	{
-		AuthenticationState? authState = await AuthStateProvider.GetAuthenticationStateAsync();
-
-		if (authState.User?.Identity is { IsAuthenticated: false } ||
-			authState.User?.Identity is null)
-		{
-			Navigation.NavigateTo("/auth", forceLoad: true);
-		}
-	}
-
 	private async Task LogoutAsync()
 	{
 		if (AuthProvider is not null)

@@ -24,7 +24,7 @@ public partial class Authorization
 			if (authResponse is null) return;
 
 			await AuthProvider!.Login(authResponse);
-			Navigation.NavigateTo("/");
+			Navigation.NavigateTo("/", forceLoad: true);
 		}
 	}
 }
