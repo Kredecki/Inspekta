@@ -1,0 +1,44 @@
+﻿@page "/auth"
+@layout Layout.AuthLayout.AuthLayout
+
+<div id="main-container">
+	<form @onsubmit=SignIn>
+		<fieldset>
+			<legend title="Inspekta">
+				Inspekta
+			</legend>
+
+			<div class="field">
+				<input class="primary-input"
+					   id="login"
+					   name="login"
+					   type="text"
+					   required
+					   autocomplete="username"
+					   placeholder=" "
+					   title="Login"
+					   @bind-value=Model.Login>
+				<label for="login">Login</label>
+			</div>
+
+			<div class="field">
+				<input class="primary-input"
+					   id="password"
+					   name="password"
+					   type="password"
+					   required
+					   autocomplete="current-password"
+					   placeholder=" "
+					   title="Hasło"
+					   @bind-value=Model.Password>
+				<label for="password">Hasło</label>
+			</div>
+
+			<button class="primary-button hover"
+					type="submit"
+					title="Zaloguj się">
+				Zaloguj się
+			</button>
+		</fieldset>
+	</form>
+</div>

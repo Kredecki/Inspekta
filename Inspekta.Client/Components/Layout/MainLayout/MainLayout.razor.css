@@ -1,0 +1,50 @@
+#main-container {
+    height: 100vh;
+    background-image: url("/img/background.jpg");
+    background-position: center;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", Arial, sans-serif;
+}
+
+#background {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    height: 98vh;
+
+    display: flex;
+    padding: 1vh;
+    gap: 1vh;
+}
+
+#finder {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background: rgba(255,255,255,0.1);
+    border-radius: 1rem;
+    -webkit-box-shadow: inset 8px 8px 9px -12px rgba(255, 255, 255, 1);
+    -moz-box-shadow: inset 8px 8px 9px -12px rgba(255, 255, 255, 1);
+    box-shadow: inset 8px 8px 9px -12px rgba(255, 255, 255, 1);
+    height: 96vh;
+    width: 10vh;
+    padding: 1vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#apps {
+    display: flex;
+    flex-direction: column;
+    
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2vh;
+}
+
+#footer img{
+    width: 2vh;
+    opacity: .8;
+    color: #fff;
+    cursor: pointer;
+}

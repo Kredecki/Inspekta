@@ -1,0 +1,25 @@
+﻿#license-container {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background: rgba(255,255,255,0.1);
+    border-radius: 1rem;
+    padding: 2vh;
+    -webkit-box-shadow: inset 8px 8px 9px -12px rgba(255, 255, 255, 1);
+    -moz-box-shadow: inset 8px 8px 9px -12px rgba(255, 255, 255, 1);
+    box-shadow: inset 8px 8px 9px -12px rgba(255, 255, 255, 1);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1vh;
+}
+
+    #license-container span {
+        color: rgba(255,255,255,0.8);
+        letter-spacing: 1px;
+        font-size: 1.6vh;
+    }
+
+img{
+    width: 2.5vh;
+}

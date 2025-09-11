@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35931.197
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inspekta.API", "Inspekta.API\Inspekta.API.csproj", "{8BB7A5F5-8780-0779-4076-CFF90BFC53D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inspekta.Client", "Inspekta.Client\Inspekta.Client.csproj", "{7B1ADB50-E09F-F837-FDF9-A629BB5BCC71}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inspekta.Persistance", "Inspekta.Persistance\Inspekta.Persistance.csproj", "{BD31667D-B58C-16FA-BCE4-C12F0FCEA300}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inspekta.Shared", "Inspekta.Shared\Inspekta.Shared.csproj", "{AD501DEA-6DDE-64E5-589B-376604B8BD56}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8BB7A5F5-8780-0779-4076-CFF90BFC53D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BB7A5F5-8780-0779-4076-CFF90BFC53D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BB7A5F5-8780-0779-4076-CFF90BFC53D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BB7A5F5-8780-0779-4076-CFF90BFC53D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B1ADB50-E09F-F837-FDF9-A629BB5BCC71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B1ADB50-E09F-F837-FDF9-A629BB5BCC71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B1ADB50-E09F-F837-FDF9-A629BB5BCC71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B1ADB50-E09F-F837-FDF9-A629BB5BCC71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD31667D-B58C-16FA-BCE4-C12F0FCEA300}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD31667D-B58C-16FA-BCE4-C12F0FCEA300}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD31667D-B58C-16FA-BCE4-C12F0FCEA300}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD31667D-B58C-16FA-BCE4-C12F0FCEA300}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD501DEA-6DDE-64E5-589B-376604B8BD56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD501DEA-6DDE-64E5-589B-376604B8BD56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD501DEA-6DDE-64E5-589B-376604B8BD56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD501DEA-6DDE-64E5-589B-376604B8BD56}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {12B91E8B-F036-43BA-9A55-5CD805F91F4C}
+	EndGlobalSection
+EndGlobal

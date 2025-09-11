@@ -1,0 +1,19 @@
+﻿.application {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: rgba(255,255,255,0.8);
+    cursor: pointer;
+    letter-spacing: 1px;
+    gap: 1vh;
+    font-size: 1.6vh;
+}
+
+img {
+    width: 4vh;
+    background-color: #fff;
+    border-radius: 1rem;
+    padding: 1vh;
+}

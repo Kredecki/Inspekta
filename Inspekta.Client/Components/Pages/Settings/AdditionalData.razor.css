@@ -1,0 +1,87 @@
+﻿form {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background: rgba(255,255,255,0.1);
+    border-radius: 1rem;
+    padding: 2vh;
+    -webkit-box-shadow: inset 8px 8px 9px -12px rgba(255, 255, 255, 1);
+    -moz-box-shadow: inset 8px 8px 9px -12px rgba(255, 255, 255, 1);
+    box-shadow: inset 8px 8px 9px -12px rgba(255, 255, 255, 1);
+    display: flex;
+}
+
+fieldset {
+    display: flex;
+    flex-direction: column;
+    border: none;
+    gap: 1vh;
+}
+
+legend {
+    color: rgba(255,255,255,0.4);
+    font-size: 3vh;
+    letter-spacing: 1px;
+    font-weight: 700;
+    margin-bottom: 2vh;
+}
+
+.primary-input {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", Arial, sans-serif;
+    letter-spacing: 1px;
+    border-radius: 1rem;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background: rgba(0,0,0,0.06);
+    height: 2vh;
+    padding: 1vh;
+    padding-left: 1.4vh;
+    padding-top: 2vh;
+    outline: none;
+    font-size: 2vh;
+    color: rgba(255,255,255,0.6);
+    border-color: rgba(0,0,0,0.1);
+}
+
+.field {
+    position: relative;
+}
+
+    .field label {
+        position: absolute;
+        top: 1.5vh;
+        left: 1.6vh;
+        font-size: 2vh;
+        color: rgba(255,255,255,0.6);
+        pointer-events: none;
+        transform-origin: left top;
+        transition: transform .18s ease, color .18s ease, opacity .18s ease;
+    }
+
+    .field .primary-input:focus ~ label,
+    .field .primary-input:not(:placeholder-shown) ~ label,
+    .field .primary-input:-webkit-autofill ~ label {
+        transform: translateY(-.6vh) scale(.6);
+        color: rgba(255,255,255,0.75);
+        opacity: .6;
+    }
+
+.primary-input:focus {
+    border-color: rgba(255,255,255,0.25);
+}
+
+input {
+    width: 46.5vh;
+}
+
+.primary-button {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", Arial, sans-serif;
+    letter-spacing: 1px;
+    border-radius: 1rem;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background: rgba(255,255,255,0.06);
+    height: 5vh;
+    color: rgba(255,255,255,0.6);
+    border-color: rgba(255,255,255,0.06);
+    cursor: pointer;
+}

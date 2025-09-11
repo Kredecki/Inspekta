@@ -1,0 +1,6 @@
+@Inspekta.API_HostAddress = http://localhost:5093
+
+GET {{Inspekta.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
