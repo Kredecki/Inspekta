@@ -12,11 +12,14 @@ public class SignInQueryHandler(IAuthRepository authRepository, ITokenService to
 {
 	public async Task<UserDto> Handle(SignInQuery request, CancellationToken cancellationToken)
 	{
-		User? user =
-			await authRepository.CheckAuthCredentialsAsync(request.Dto.Login, request.Dto.Password, cancellationToken);
+		if (request.Dto.Login is null)
+			throw new Exception("E007");
 
-		if(user is null) 
-			return null;
+		if (request.Dto.Password is null)
+			throw new Exception("E008");
+
+        User? user =
+			await authRepository.CheckAuthCredentialsAsync(request.Dto.Login, request.Dto.Password, cancellationToken) ?? throw new Exception("E009");
 
 		return new UserDto
 		{

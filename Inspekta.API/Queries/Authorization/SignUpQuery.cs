@@ -13,11 +13,14 @@ public class SignUpQueryHandler(IAuthRepository authRepository, IPasswordService
 {
 	public async Task<UserDto?> Handle(SignUpQuery request, CancellationToken cancellationToken)
 	{
-		bool isValidationGood =
+		if (request.Dto.Login is null)
+            throw new Exception("E001");
+
+        bool isValidationGood =
 			await authRepository.IsLoginAlreadyExist(request.Dto.Login, cancellationToken);
 
 		if (!isValidationGood)
-			throw new Exception("E001");
+			throw new Exception("E002");
 
 		string? salt = passwordService.GenerateNewSalt();
 		string? hashedPassword = passwordService.HashPassword(request.Dto.Password, salt);

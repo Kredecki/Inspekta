@@ -25,7 +25,7 @@ namespace Inspekta.API.Controllers
 		/// </remarks>
 		/// <response code="200">Returns user's model</response>
 		/// <response code="400">Credentials are incorrect, signup failed</response>
-		[AllowAnonymous]
+		[Authorize]
 		[HttpPost("SignUp")]
 		[ProducesResponseType(200, Type = typeof(UserDto))]
 		[ProducesResponseType(400, Type = typeof(ProblemDetails))]
