@@ -9,4 +9,5 @@ public sealed class UserDto
 	public string? Password { get; set; }
 	public string? Token { get; set; }
 	public EUserRole Role { get; set; }
+    public CompanyDto? Company { get; set; }
 }

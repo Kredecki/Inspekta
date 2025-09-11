@@ -8,7 +8,7 @@ namespace Inspekta.API.Queries.Authorization;
 
 public sealed record SignUpQuery(UserDto Dto) : IRequest<UserDto>;
 
-public class SignUpQueryHandler(IAuthRepository authRepository, IPasswordService passwordService)
+public class SignUpQueryHandler(IAuthRepository authRepository, ICompaniesRepository companiesRepository, IPasswordService passwordService)
 	: IRequestHandler<SignUpQuery, UserDto?>
 {
 	public async Task<UserDto?> Handle(SignUpQuery request, CancellationToken cancellationToken)
@@ -22,16 +22,33 @@ public class SignUpQueryHandler(IAuthRepository authRepository, IPasswordService
 		if (!isValidationGood)
 			throw new Exception("E002");
 
-		string? salt = passwordService.GenerateNewSalt();
+        if (request.Dto.Company is null)
+            throw new Exception("E003");
+
+        Company? company = await companiesRepository.GetCompanyById(request.Dto.Company.Id, cancellationToken) ?? throw new Exception("E004");
+
+        if (request.Dto.Password is null)
+            throw new Exception("E005");
+
+        string? salt = passwordService.GenerateNewSalt();
 		string? hashedPassword = passwordService.HashPassword(request.Dto.Password, salt);
-		User? user = await authRepository.Create(request.Dto.Login, hashedPassword, salt, request.Dto.Role, cancellationToken);
+		User? user = await authRepository.Create(request.Dto.Login, hashedPassword, salt, request.Dto.Role, company, cancellationToken) ?? throw new Exception("E006");
 
-		if (user is null)
-			return null;
-
-		return new UserDto()
+        return new UserDto()
 		{
-			Login = user.Login
-		};
+			Login = user.Login,
+			Role = user.Role,
+			Company = new CompanyDto()
+			{
+				Id = company.Id,
+				Name = company.Name,
+				NIP = company.NIP,
+				Street = company.Street,
+				ZipCode = company.ZipCode,
+				Town = company.Town,
+				Email = company.Email,
+				Phone = company.Phone
+            }
+        };
 	}
 }

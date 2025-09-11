@@ -31,6 +31,7 @@ public static class DependencyInjection
 		services.AddScoped<ITokenService, TokenService>();
 
 		services.AddScoped<IAuthRepository, AuthRepository>();
+		services.AddScoped<ICompaniesRepository, CompaniesRepository>();
 
 		return services;
 	}
