@@ -1,8 +1,8 @@
-﻿using MediatR;
+﻿using Inspekta.API.Abstractions.Services;
 using Inspekta.Persistance.Abstractions.Repositories;
 using Inspekta.Persistance.Entities;
 using Inspekta.Shared.DTOs;
-using Inspekta.API.Abstractions.Services;
+using MediatR;
 
 namespace Inspekta.API.Queries.Authorization;
 
@@ -14,27 +14,27 @@ public class SignUpQueryHandler(IAuthRepository authRepository, ICompaniesReposi
 	public async Task<UserDto?> Handle(SignUpQuery request, CancellationToken cancellationToken)
 	{
 		if (request.Dto.Login is null)
-            throw new Exception("E001");
+			throw new Exception("E001");
 
-        bool isValidationGood =
+		bool isValidationGood =
 			await authRepository.IsLoginAlreadyExist(request.Dto.Login, cancellationToken);
 
 		if (!isValidationGood)
 			throw new Exception("E002");
 
-        if (request.Dto.Company is null)
-            throw new Exception("E003");
+		if (request.Dto.Company is null)
+			throw new Exception("E003");
 
-        Company? company = await companiesRepository.GetCompanyById(request.Dto.Company.Id, cancellationToken) ?? throw new Exception("E004");
+		Company? company = await companiesRepository.GetCompanyById(request.Dto.Company.Id, cancellationToken) ?? throw new Exception("E004");
 
-        if (request.Dto.Password is null)
-            throw new Exception("E005");
+		if (request.Dto.Password is null)
+			throw new Exception("E005");
 
-        string? salt = passwordService.GenerateNewSalt();
+		string? salt = passwordService.GenerateNewSalt();
 		string? hashedPassword = passwordService.HashPassword(request.Dto.Password, salt);
 		User? user = await authRepository.Create(request.Dto.Login, hashedPassword, salt, request.Dto.Role, company, cancellationToken) ?? throw new Exception("E006");
 
-        return new UserDto()
+		return new UserDto()
 		{
 			Login = user.Login,
 			Role = user.Role,
@@ -48,7 +48,7 @@ public class SignUpQueryHandler(IAuthRepository authRepository, ICompaniesReposi
 				Town = company.Town,
 				Email = company.Email,
 				Phone = company.Phone
-            }
-        };
+			}
+		};
 	}
 }

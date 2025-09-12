@@ -1,14 +1,14 @@
-﻿using MediatR;
-using Inspekta.Shared.DTOs;
+﻿using Inspekta.API.Abstractions.Services;
 using Inspekta.Persistance.Abstractions.Repositories;
 using Inspekta.Persistance.Entities;
-using Inspekta.API.Abstractions.Services;
+using Inspekta.Shared.DTOs;
+using MediatR;
 
 namespace Inspekta.API.Queries.Authorization;
 
 public sealed record SignInQuery(UserDto Dto) : IRequest<UserDto>;
 
-public class SignInQueryHandler(IAuthRepository authRepository, ITokenService tokenService) : IRequestHandler<SignInQuery, UserDto>
+public class SignInQueryHandler(IAuthRepository authRepository, ITokenService tokenService, IPasswordService passwordService) : IRequestHandler<SignInQuery, UserDto>
 {
 	public async Task<UserDto> Handle(SignInQuery request, CancellationToken cancellationToken)
 	{
@@ -18,14 +18,18 @@ public class SignInQueryHandler(IAuthRepository authRepository, ITokenService to
 		if (request.Dto.Password is null)
 			throw new Exception("E008");
 
-        User? user =
-			await authRepository.CheckAuthCredentialsAsync(request.Dto.Login, request.Dto.Password, cancellationToken) ?? throw new Exception("E009");
+		User? user =
+			await authRepository.CheckAuthCredentialsAsync(request.Dto.Login, cancellationToken) ?? throw new Exception("E009");
+
+		string? password = passwordService.HashPassword(request.Dto.Password, user.Salt);
+
+		if (password != user.PassHash)
+			throw new Exception("E010");
 
 		return new UserDto
 		{
 			Id = user.Id,
 			Login = user.Login,
-			Password = user.PassHash,
 			Token = tokenService.GenerateToken(user)
 		};
 	}

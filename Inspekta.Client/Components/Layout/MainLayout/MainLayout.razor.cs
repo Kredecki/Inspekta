@@ -1,6 +1,5 @@
 ﻿using Inspekta.Client.Providers;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
 
 namespace Inspekta.Client.Components.Layout.MainLayout;
 

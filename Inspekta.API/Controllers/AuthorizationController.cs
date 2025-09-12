@@ -1,8 +1,8 @@
-﻿using MediatR;
+﻿using Inspekta.API.Queries.Authorization;
+using Inspekta.Shared.DTOs;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Inspekta.Shared.DTOs;
-using Inspekta.API.Queries.Authorization;
 
 namespace Inspekta.API.Controllers
 {

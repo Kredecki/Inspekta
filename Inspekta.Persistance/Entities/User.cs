@@ -7,11 +7,11 @@ namespace Inspekta.Persistance.Entities;
 
 public class User : DbEntity
 {
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public Guid Id { get; set; }
+	[Key]
+	[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+	public Guid Id { get; set; }
 
-    [Required, MaxLength(255)]
+	[Required, MaxLength(255)]
 	[Column(TypeName = "varchar(255)")]
 	public required string Login { get; set; }
 
@@ -23,12 +23,12 @@ public class User : DbEntity
 	[Column(TypeName = "varchar(16)")]
 	public required string Salt { get; set; }
 
-    [Required]
-    [Column(TypeName = "integer")]
-    public required EUserRole Role { get; set; }
+	[Required]
+	[Column(TypeName = "integer")]
+	public required EUserRole Role { get; set; }
 
-    [Required]
-    public Guid CompanyId { get; set; }
+	[Required]
+	public Guid CompanyId { get; set; }
 
-    public Company Company { get; set; } = null!;
+	public Company Company { get; set; } = null!;
 }

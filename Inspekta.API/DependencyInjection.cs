@@ -1,12 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Inspekta.Persistance;
-using System.Reflection;
-using Inspekta.API.Abstractions.Services;
+﻿using Inspekta.API.Abstractions.Services;
 using Inspekta.API.Services;
+using Inspekta.Persistance;
 using Inspekta.Persistance.Abstractions.Repositories;
 using Inspekta.Persistance.Repositories;
+using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace Inspekta.API;
+
 public static class DependencyInjection
 {
 	public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration)

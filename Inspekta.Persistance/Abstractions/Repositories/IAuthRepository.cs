@@ -9,8 +9,8 @@ public interface IAuthRepository
 		CancellationToken cancellationToken = default);
 
 	public Task<User?> Create(string login, string passwordHash, string salt, EUserRole role, Company company,
-        CancellationToken cancellationToken = default);
+		CancellationToken cancellationToken = default);
 
-	public Task<User?> CheckAuthCredentialsAsync(string login, string password,
+	public Task<User?> CheckAuthCredentialsAsync(string login,
 		CancellationToken cancellationToken = default);
 }
