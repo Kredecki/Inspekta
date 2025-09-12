@@ -5,12 +5,12 @@ namespace Inspekta.Client.Components.Pages.Companies;
 
 public partial class Companies
 {
-    private List<CompanyDto> Model { get; set; } = [];
+	private List<CompanyDto> Model { get; set; } = [];
 
-    protected override async Task OnInitializedAsync()
+	protected override async Task OnInitializedAsync()
 	{
-        Model = await GetData();
-    }
+		Model = await GetData();
+	}
 
 	private async Task<List<CompanyDto>> GetData()
 		=> await _HttpClient.GetFromJsonAsync<List<CompanyDto>>("Api/Companies/Get") ?? [];

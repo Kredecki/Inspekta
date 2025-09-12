@@ -1,6 +1,5 @@
 ﻿using Inspekta.Persistance.Abstractions.Repositories;
 using Inspekta.Persistance.Entities;
-using Inspekta.Shared.DTOs;
 using Inspekta.Shared.Enums;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,7 +17,7 @@ public class AuthRepository(ApplicationDbContext dbContext) : IAuthRepository
 	}
 
 	public async Task<User?> Create(string login, string passwordHash, string salt, EUserRole role, Company company,
-        CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken = default)
 	{
 		User user = new()
 		{
@@ -27,7 +26,7 @@ public class AuthRepository(ApplicationDbContext dbContext) : IAuthRepository
 			Salt = salt,
 			Role = role,
 			Company = company,
-            CreatedBy = Guid.NewGuid(),
+			CreatedBy = Guid.NewGuid(),
 			CreatedAt = DateTime.UtcNow,
 			ModifiedBy = Guid.NewGuid(),
 			ModifiedAt = DateTime.UtcNow
@@ -38,7 +37,7 @@ public class AuthRepository(ApplicationDbContext dbContext) : IAuthRepository
 		return user;
 	}
 
-	public async Task<User?> CheckAuthCredentialsAsync(string login, string password,
+	public async Task<User?> CheckAuthCredentialsAsync(string login,
 		CancellationToken cancellationToken = default)
 	{
 		User? user = await dbContext.Users.FirstOrDefaultAsync(x => x.Login == login, cancellationToken);

@@ -10,28 +10,28 @@ public static class DependencyInjection
 	{
 		string baseUrl = configuration["URL:BaseUrl"] ?? string.Empty;
 
-        services.AddTransient<JwtAuthorizationMessageHandler>();
+		services.AddTransient<JwtAuthorizationMessageHandler>();
 
-        services.AddHttpClient("Inspekta", client =>
+		services.AddHttpClient("Inspekta", client =>
 		{
 			client.BaseAddress = new Uri(baseUrl);
 		})
 		.AddHttpMessageHandler<JwtAuthorizationMessageHandler>();
 
-        services.AddScoped(sp =>
+		services.AddScoped(sp =>
 			sp.GetRequiredService<IHttpClientFactory>().CreateClient("Inspekta")
 		);
 
 		services.AddBlazoredLocalStorage();
 		services.AddAuthorizationCore(config =>
 		{
-            foreach (var policy in AppPolicies.Policies)
-            {
-                config.AddPolicy(policy.Key, policy.Value);
-            }
-        });
+			foreach (var policy in AppPolicies.Policies)
+			{
+				config.AddPolicy(policy.Key, policy.Value);
+			}
+		});
 
-        services.AddScoped<JwtAuthenticationStateProvider>();
+		services.AddScoped<JwtAuthenticationStateProvider>();
 		services.AddScoped<AuthenticationStateProvider, JwtAuthenticationStateProvider>();
 
 		return services;
