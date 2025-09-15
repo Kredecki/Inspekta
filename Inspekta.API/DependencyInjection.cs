@@ -1,4 +1,5 @@
 ﻿using Inspekta.API.Abstractions.Services;
+using Inspekta.API.Handlers;
 using Inspekta.API.Services;
 using Inspekta.Persistance;
 using Inspekta.Persistance.Abstractions.Repositories;
@@ -27,6 +28,9 @@ public static class DependencyInjection
 		{
 			options.UseNpgsql(configuration.GetConnectionString("InspektaDb"));
 		});
+
+		services.AddProblemDetails();
+		services.AddExceptionHandler<GlobalExceptionHandler>();
 
 		services.AddScoped<IPasswordService, PasswordService>();
 		services.AddScoped<ITokenService, TokenService>();

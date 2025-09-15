@@ -69,6 +69,8 @@ builder.Services.AddApplication(builder.Configuration);
 
 var app = builder.Build();
 
+app.UseExceptionHandler();
+
 app.UseCors("AllowedOrigins");
 
 // Configure the HTTP request pipeline.
