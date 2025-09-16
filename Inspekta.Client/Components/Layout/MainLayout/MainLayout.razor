@@ -4,29 +4,41 @@
     <div id="background">
         <div id="finder">
             <div id="apps">
-                <span @onclick="@(() => Navigation.NavigateTo("/"))">
-                    <Application Name="Panel" />
-                </span>
+                @if(User.IsInRole("Administrator") || User.IsInRole("SuperAdministrator"))
+                {
+                    <span @onclick="@(() => Navigation.NavigateTo("/"))">
+                        <Application Name="Panel" />
+                    </span>
 
-                <span @onclick="@(() => Navigation.NavigateTo("/users"))">
-                    <Application Name="Użytkownicy" />
-                </span>
+                    <span @onclick="@(() => Navigation.NavigateTo("/users"))">
+                        <Application Name="Użytkownicy" />
+                    </span>
+				}
+                
+                @if(User.IsInRole("SuperAdministrator"))
+                {
+                    <span @onclick="@(() => Navigation.NavigateTo("/companies"))">
+                        <Application Name="Firmy" />
+                    </span>
+				}
 
-                <span @onclick="@(() => Navigation.NavigateTo("/companies"))">
-                    <Application Name="Firmy" />
-                </span>
+                @if (User.IsInRole("Inspector") || User.IsInRole("Administrator") || User.IsInRole("SuperAdministrator"))
+                {
+                    <span @onclick="@(() => Navigation.NavigateTo("/inspections"))">
+                        <Application Name="Przeglądy" />
+                    </span>
+                }
 
-                <span @onclick="@(() => Navigation.NavigateTo("/inspections"))">
-                    <Application Name="Przeglądy" />
-                </span>
+                @if (User.IsInRole("Administrator") || User.IsInRole("SuperAdministrator"))
+                {
+                    <span @onclick="@(() => Navigation.NavigateTo("/support"))">
+                        <Application Name="Wsparcie" />
+                    </span>
 
-                <span @onclick="@(() => Navigation.NavigateTo("/support"))">
-                    <Application Name="Wsparcie" />
-                </span>
-
-                <span @onclick="@(() => Navigation.NavigateTo("/settings"))">
-                    <Application Name="Ustawienia" />
-                </span>
+                    <span @onclick="@(() => Navigation.NavigateTo("/settings"))">
+                        <Application Name="Ustawienia" />
+                    </span>
+                }
             </div>
 
             <div id="footer" 
