@@ -1,0 +1,195 @@
+﻿table {
+    width: 98%;
+    border-spacing: 0;
+    table-layout: auto;
+    margin-left: 1%;
+    margin-right: 1%;
+}
+
+    table tbody tr:hover {
+        cursor: pointer;
+        opacity: .6;
+    }
+
+    table thead tr th {
+        text-align: left;
+        padding: 1vh;
+        color: #fff;
+        opacity: .8;
+    }
+
+        table thead tr th span {
+            display: inline-block;
+            vertical-align: middle;
+            transform: rotate(270deg);
+            font-size: 18px;
+            line-height: 1;
+            cursor: pointer;
+        }
+
+    table tbody tr td {
+        padding: 1vh;
+        border-bottom-width: 1px;
+        border-bottom-color: rgb(128, 128, 128, .6);
+        border-bottom-style: solid;
+        color: #fff;
+        opacity: .8;
+    }
+
+header {
+    margin-left: .3rem;
+    margin-right: .3rem;
+    height: 5vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#header-first-container {
+    display: flex;
+    align-items: center;
+    gap: 5%;
+}
+
+    #header-first-container span {
+        opacity: .8;
+        color: #fff;
+    }
+
+    #header-first-container input {
+        -webkit-box-shadow: inset 8px 8px 9px -12px rgba(255, 255, 255, 1);
+        -moz-box-shadow: inset 8px 8px 9px -12px rgba(255, 255, 255, 1);
+        box-shadow: inset 8px 8px 9px -12px rgba(255, 255, 255, 1);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        background: rgba(255,255,255,0.1);
+        border-radius: 1rem;
+        color: #fff;
+        opacity: .8;
+    }
+
+        #header-first-container input::placeholder{
+            color: #fff;
+            opacity: .8;
+        }
+
+#header-second-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1%;
+    align-items: center;
+    width: 20%;
+}
+
+    #header-second-container select {
+        -webkit-box-shadow: inset 8px 8px 9px -12px rgba(255, 255, 255, 1);
+        -moz-box-shadow: inset 8px 8px 9px -12px rgba(255, 255, 255, 1);
+        box-shadow: inset 8px 8px 9px -12px rgba(255, 255, 255, 1);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        background: rgba(255,255,255,0.1);
+        border-radius: 1rem;
+        color: #fff;
+        opacity: .8;
+        height: 4vh;
+        padding-left: 1vh;
+    }
+
+header input {
+    height: 4vh;
+    font-size: 18px;
+    outline: none;
+    border: none;
+}
+
+header select {
+    border: none;
+    outline: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+header button {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", Arial, sans-serif;
+    letter-spacing: 1px;
+    border-radius: 1rem;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background: rgba(255,255,255,0.1);
+    height: 4vh;
+    width: 12vh;
+    color: rgba(255,255,255,0.6);
+    border-color: rgba(255,255,255,0.06);
+    cursor: pointer;
+    -webkit-box-shadow: inset 8px 8px 9px -12px rgba(255, 255, 255, 1);
+    -moz-box-shadow: inset 8px 8px 9px -12px rgba(255, 255, 255, 1);
+    box-shadow: inset 8px 8px 9px -12px rgba(255, 255, 255, 1);
+}
+
+header span {
+    font-size: 32px;
+}
+
+footer {
+    margin-left: 1%;
+    margin-right: 1%;
+    height: 5vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #fff;
+}
+
+    footer span {
+        font-size: 14px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+    }
+
+#main-container {
+    -webkit-box-shadow: inset 8px 8px 9px -12px rgba(255, 255, 255, 1);
+    -moz-box-shadow: inset 8px 8px 9px -12px rgba(255, 255, 255, 1);
+    box-shadow: inset 8px 8px 9px -12px rgba(255, 255, 255, 1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background: rgba(255,255,255,0.1);
+    width: 100%;
+    border-radius: 1rem;
+}
+
+.pagger {
+    display: flex;
+    gap: 2vh;
+}
+
+.pagger span.active {
+    font-weight: bold !important;
+    text-decoration: underline !important;
+}
+
+.disabled {
+    cursor: not-allowed;
+    opacity: .5;
+}
+
+#header-first-container .search-input {
+    position: relative;
+    display: inline-block;
+}
+
+    #header-first-container .search-input .material-symbols-outlined {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 20px;
+        pointer-events: none;
+        color: #fff;
+        opacity: .8;
+    }
+
+    #header-first-container .search-input input {
+        padding-left: 40px;
+    }
