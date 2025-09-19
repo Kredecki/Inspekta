@@ -5,13 +5,15 @@ using MediatR;
 
 namespace Inspekta.API.Queries.Companies;
 
-public sealed record GetCompaniesQuery : IRequest<List<CompanyDto>>;
+public sealed record GetCompaniesQuery(
+    int CurrentPage,
+    int RecordsPerPage) : IRequest<List<CompanyDto>>;
 
 public class GetCompaniesHandler(ICompaniesRepository companiesRepository) : IRequestHandler<GetCompaniesQuery, List<CompanyDto>>
 {
 	public async Task<List<CompanyDto>> Handle(GetCompaniesQuery request, CancellationToken cancellationToken)
 	{
-		List<Company>? companies = await companiesRepository.GetCompanies(cancellationToken) ?? throw new Exception("E011");
+		List<Company>? companies = await companiesRepository.GetPagedCompanies(request.CurrentPage, request.RecordsPerPage, cancellationToken) ?? throw new Exception("E011");
 
 		return new List<CompanyDto>(companies.Select(x => new CompanyDto
 		{

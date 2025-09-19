@@ -21,6 +21,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="8.0.18" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.15" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.17" />
+    <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="8.0.20" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.1" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.13.0" />
   </ItemGroup>
@@ -35,11 +36,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Components\Pages\Users\" />
     <Folder Include="wwwroot\img\" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Inspekta.Persistance\Inspekta.Persistance.csproj" />
     <ProjectReference Include="..\Inspekta.Shared\Inspekta.Shared.csproj" />
   </ItemGroup>
 
