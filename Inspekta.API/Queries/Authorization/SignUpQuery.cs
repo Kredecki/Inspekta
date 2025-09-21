@@ -6,7 +6,9 @@ using MediatR;
 
 namespace Inspekta.API.Queries.Authorization;
 
-public sealed record SignUpQuery(UserDto Dto) : IRequest<UserDto>;
+public sealed record SignUpQuery(
+	UserDto Dto,
+	Guid AdminId) : IRequest<UserDto>;
 
 public class SignUpQueryHandler(IAuthRepository authRepository, ICompaniesRepository companiesRepository, IPasswordService passwordService)
 	: IRequestHandler<SignUpQuery, UserDto?>
@@ -22,10 +24,27 @@ public class SignUpQueryHandler(IAuthRepository authRepository, ICompaniesReposi
 		if (!isValidationGood)
 			throw new Exception("E002");
 
+		Company? company;
 		if (request.Dto.Company is null)
-			throw new Exception("E003");
+		{
+			company = await companiesRepository.GetCompanyByUserId(request.AdminId, cancellationToken) ?? throw new Exception("E003");
 
-		Company? company = await companiesRepository.GetCompanyById(request.Dto.Company.Id, cancellationToken) ?? throw new Exception("E004");
+			request.Dto.Company = new CompanyDto()
+			{
+				Id = company.Id,
+				Name = company.Name,
+				NIP = company.NIP,
+				Street = company.Street,
+				ZipCode = company.ZipCode,
+				Town = company.Town,
+				Email = company.Email,
+				Phone = company.Phone
+            };
+        }
+		else
+		{
+			company = await companiesRepository.GetCompanyById(request.Dto.Company.Id, cancellationToken) ?? throw new Exception("E004");
+        }
 
 		if (request.Dto.Password is null)
 			throw new Exception("E005");
@@ -38,17 +57,17 @@ public class SignUpQueryHandler(IAuthRepository authRepository, ICompaniesReposi
 		{
 			Login = user.Login,
 			Role = user.Role,
-			Company = new CompanyDto()
+			Company = user.Company is not null ? new CompanyDto()
 			{
-				Id = company.Id,
-				Name = company.Name,
-				NIP = company.NIP,
-				Street = company.Street,
-				ZipCode = company.ZipCode,
-				Town = company.Town,
-				Email = company.Email,
-				Phone = company.Phone
-			}
-		};
+				Id = user.Company.Id,
+				Name = user.Company.Name,
+				NIP = user.Company.NIP,
+				Street = user.Company.Street,
+				ZipCode = user.Company.ZipCode,
+				Town = user.Company.Town,
+				Email = user.Company.Email,
+				Phone = user.Company.Phone
+			} : null
+        };
 	}
 }

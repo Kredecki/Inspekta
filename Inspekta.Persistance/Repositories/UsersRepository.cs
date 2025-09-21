@@ -1,6 +1,5 @@
 ﻿using Inspekta.Persistance.Abstractions.Repositories;
 using Inspekta.Persistance.Entities;
-using Inspekta.Shared.DTOs;
 using Microsoft.EntityFrameworkCore;
 
 namespace Inspekta.Persistance.Repositories;
@@ -35,4 +34,18 @@ public class UsersRepository(ApplicationDbContext dbContext) : IUsersRepository
         => await dbContext.Users
             .Where(x => x.Id == id && x.CompanyId == companyId)
             .FirstOrDefaultAsync(cancellationToken);
+
+    public async Task UpdateUser(User user, 
+        CancellationToken cancellationToken = default)
+    {
+        dbContext.Users.Update(user);
+        await dbContext.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task DeleteUser(User user, 
+        CancellationToken cancellationToken = default)
+    {
+        dbContext.Users.Remove(user);
+        await dbContext.SaveChangesAsync(cancellationToken);
+    }
 }

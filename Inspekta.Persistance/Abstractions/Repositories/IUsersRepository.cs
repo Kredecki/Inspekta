@@ -15,4 +15,10 @@ public interface IUsersRepository
 
     public Task<User?> GetCompanyUserById(Guid id, Guid companyId,
         CancellationToken cancellationToken = default);
+
+    public Task UpdateUser(User user,
+        CancellationToken cancellationToken = default);
+
+    public Task DeleteUser(User user,
+        CancellationToken cancellationToken = default);
 }

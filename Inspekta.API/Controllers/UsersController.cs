@@ -66,4 +66,48 @@ public class UsersController(IMediator mediator, ICurrentUserService currentUser
 
         return BadRequest();
     }
+
+    /// <summary>
+    /// UpdateUser endpoint.
+    /// </summary>
+    /// <remarks>
+    ///     GET /Api/Users/Update
+    /// </remarks>
+    /// <response code="200">Returns updated user model</response>
+    /// <response code="400">Error while updating user</response>
+    [Authorize(Roles = $"{nameof(EUserRole.Administrator)}, {nameof(EUserRole.SuperAdministrator)}")]
+    [HttpPut("Update")]
+    [ProducesResponseType(200)]
+    [ProducesResponseType(400, Type = typeof(ProblemDetails))]
+    [Produces("application/json")]
+    public async Task<IActionResult> UpdateUser(UserDto user,
+        CancellationToken cancellationToken = default)
+    {
+        UserDto? result = await mediator.Send(new UpdateUserCommand(user), cancellationToken);
+
+        if (result is not null)
+            return Ok(result);
+
+        return BadRequest();
+    }
+
+    /// <summary>
+    /// DeleteUser endpoint.
+    /// </summary>
+    /// <remarks>
+    ///     GET /Api/Users/Delete
+    /// </remarks>
+    /// <response code="200">Returns OK</response>
+    /// <response code="400">Error while deleting user</response>
+    [Authorize(Roles = $"{nameof(EUserRole.Administrator)}, {nameof(EUserRole.SuperAdministrator)}")]
+    [HttpDelete("Delete")]
+    [ProducesResponseType(200)]
+    [ProducesResponseType(400, Type = typeof(ProblemDetails))]
+    [Produces("application/json")]
+    public async Task<IActionResult> DeleteUser([FromQuery] Guid id,
+        CancellationToken cancellationToken = default)
+    {
+        await mediator.Send(new DeleteUserCommand(id), cancellationToken);
+        return Ok();
+    }
 }

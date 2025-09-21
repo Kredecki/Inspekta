@@ -1,4 +1,5 @@
-﻿using Inspekta.API.Queries.Authorization;
+﻿using Inspekta.API.Abstractions.Services;
+using Inspekta.API.Queries.Authorization;
 using Inspekta.Shared.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -9,7 +10,7 @@ namespace Inspekta.API.Controllers
 	/// <inheritdoc />
 	[Route("Api/[controller]")]
 	[ApiController]
-	public class AuthorizationController(IMediator mediator) : ControllerBase
+	public class AuthorizationController(IMediator mediator, ICurrentUserService currentUserService) : ControllerBase
 	{
 		/// <summary>
 		/// User SignUp endpoint.
@@ -32,7 +33,9 @@ namespace Inspekta.API.Controllers
 		[Produces("application/json")]
 		public async Task<IActionResult> SignUp(UserDto dto, CancellationToken cancellationToken = default)
 		{
-			UserDto? result = await mediator.Send(new SignUpQuery(dto), cancellationToken);
+			Guid sid = currentUserService.GetId(User);
+
+            UserDto? result = await mediator.Send(new SignUpQuery(dto, sid), cancellationToken);
 
 			if (result is not null)
 				return Ok(result);
