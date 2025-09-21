@@ -51,7 +51,7 @@ public class SignUpQueryHandler(IAuthRepository authRepository, ICompaniesReposi
 
 		string? salt = passwordService.GenerateNewSalt();
 		string? hashedPassword = passwordService.HashPassword(request.Dto.Password, salt);
-		User? user = await authRepository.Create(request.Dto.Login, hashedPassword, salt, request.Dto.Role, company, cancellationToken) ?? throw new Exception("E006");
+		User? user = await authRepository.Create(request.Dto.Login, hashedPassword, salt, request.Dto.Role, company, request.AdminId, cancellationToken) ?? throw new Exception("E006");
 
 		return new UserDto()
 		{

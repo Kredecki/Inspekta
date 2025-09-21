@@ -83,7 +83,9 @@ public class UsersController(IMediator mediator, ICurrentUserService currentUser
     public async Task<IActionResult> UpdateUser(UserDto user,
         CancellationToken cancellationToken = default)
     {
-        UserDto? result = await mediator.Send(new UpdateUserCommand(user), cancellationToken);
+        Guid sid = currentUserService.GetId(User);
+
+        UserDto? result = await mediator.Send(new UpdateUserCommand(user, sid), cancellationToken);
 
         if (result is not null)
             return Ok(result);

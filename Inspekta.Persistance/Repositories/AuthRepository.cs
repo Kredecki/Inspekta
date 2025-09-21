@@ -16,7 +16,7 @@ public class AuthRepository(ApplicationDbContext dbContext) : IAuthRepository
 		return !result;
 	}
 
-	public async Task<User?> Create(string login, string passwordHash, string salt, EUserRole role, Company company,
+	public async Task<User?> Create(string login, string passwordHash, string salt, EUserRole role, Company company, Guid adminId,
 		CancellationToken cancellationToken = default)
 	{
 		User user = new()
@@ -26,9 +26,9 @@ public class AuthRepository(ApplicationDbContext dbContext) : IAuthRepository
 			Salt = salt,
 			Role = role,
 			Company = company,
-			CreatedBy = Guid.NewGuid(),
+			CreatedBy = adminId,
 			CreatedAt = DateTime.UtcNow,
-			ModifiedBy = Guid.NewGuid(),
+			ModifiedBy = adminId,
 			ModifiedAt = DateTime.UtcNow
 		};
 

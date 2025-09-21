@@ -35,9 +35,12 @@ public class UsersRepository(ApplicationDbContext dbContext) : IUsersRepository
             .Where(x => x.Id == id && x.CompanyId == companyId)
             .FirstOrDefaultAsync(cancellationToken);
 
-    public async Task UpdateUser(User user, 
+    public async Task UpdateUser(User user, Guid adminId,
         CancellationToken cancellationToken = default)
     {
+        user.ModifiedBy = adminId;
+        user.ModifiedAt = DateTime.Now;
+
         dbContext.Users.Update(user);
         await dbContext.SaveChangesAsync(cancellationToken);
     }
