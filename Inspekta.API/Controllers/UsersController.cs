@@ -29,8 +29,8 @@ public class UsersController(IMediator mediator, ICurrentUserService currentUser
     public async Task<IActionResult> GetPagedUsers([FromQuery] int currentPage = 0, [FromQuery] int recordsPerPage = 10, 
         CancellationToken cancellationToken = default)
     {
-        Guid sid = currentUserService.GetId(User);
-        EUserRole userRole = currentUserService.GetRole(User);
+        Guid sid = currentUserService.GetId();
+        EUserRole userRole = currentUserService.GetRole();
 
         List<UserDto>? result = await mediator.Send(new GetUsersQuery(currentPage, recordsPerPage, userRole, sid), cancellationToken);
 
@@ -56,8 +56,8 @@ public class UsersController(IMediator mediator, ICurrentUserService currentUser
     public async Task<IActionResult> GetUserById([FromQuery] Guid id, 
         CancellationToken cancellationToken = default)
     {
-        Guid sid = currentUserService.GetId(User);
-        EUserRole userRole = currentUserService.GetRole(User);
+        Guid sid = currentUserService.GetId();
+        EUserRole userRole = currentUserService.GetRole();
 
         UserDto? result = await mediator.Send(new GetUserByIdQuery(id, userRole, sid), cancellationToken);
 
@@ -83,7 +83,7 @@ public class UsersController(IMediator mediator, ICurrentUserService currentUser
     public async Task<IActionResult> UpdateUser(UserDto user,
         CancellationToken cancellationToken = default)
     {
-        Guid sid = currentUserService.GetId(User);
+        Guid sid = currentUserService.GetId();
 
         UserDto? result = await mediator.Send(new UpdateUserCommand(user, sid), cancellationToken);
 

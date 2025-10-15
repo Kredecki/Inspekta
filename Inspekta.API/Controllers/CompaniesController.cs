@@ -77,7 +77,7 @@ public class CompaniesController(IMediator mediator, ICurrentUserService current
 	public async Task<IActionResult> CreateCompany([FromBody] CompanyDto companyDto, 
 		CancellationToken cancellationToken = default)
 	{
-        Guid sid = currentUserService.GetId(User);
+        Guid sid = currentUserService.GetId();
 
         CompanyDto? result = await mediator.Send(new CreateCompanyCommand(companyDto, sid), cancellationToken);
 
@@ -103,7 +103,7 @@ public class CompaniesController(IMediator mediator, ICurrentUserService current
 	public async Task<IActionResult> UpdateCompany([FromBody] CompanyDto companyDto, 
 		CancellationToken cancellationToken = default)
 	{
-		Guid sid = currentUserService.GetId(User);
+		Guid sid = currentUserService.GetId();
 
 		CompanyDto? result = await mediator.Send(new UpdateCompanyCommand(companyDto, sid), cancellationToken);
 

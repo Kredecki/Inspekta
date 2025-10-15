@@ -13,15 +13,15 @@ public partial class MainLayout
 {
 	[Inject]
 	private JwtAuthenticationStateProvider? AuthProvider { get; set; }
-    private ClaimsPrincipal User { get; set; } = null!;
+    private ClaimsPrincipal User { get; set; } = new(new ClaimsIdentity());
 
-	protected override async Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
 	{
 		if (AuthProvider is null)
 			return;
 
         var authState = await AuthProvider.GetAuthenticationStateAsync();
-        this.User = authState.User;
+        this.User = authState.User ?? new ClaimsPrincipal(new ClaimsIdentity());
     }
 
     private async Task LogoutAsync()

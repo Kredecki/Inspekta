@@ -33,7 +33,7 @@ namespace Inspekta.API.Controllers
 		[Produces("application/json")]
 		public async Task<IActionResult> SignUp(UserDto dto, CancellationToken cancellationToken = default)
 		{
-			Guid sid = currentUserService.GetId(User);
+			Guid sid = currentUserService.GetId();
 
             UserDto? result = await mediator.Send(new SignUpQuery(dto, sid), cancellationToken);
 

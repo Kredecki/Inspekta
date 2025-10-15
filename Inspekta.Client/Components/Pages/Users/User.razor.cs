@@ -9,6 +9,4 @@ public partial class User
     public Guid Id { get; set; }
 
     private UserDto Model { get; set; } = new();
-
-
 }

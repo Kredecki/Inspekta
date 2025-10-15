@@ -29,11 +29,13 @@ public static class DependencyInjection
 			options.UseNpgsql(configuration.GetConnectionString("InspektaDb"));
 		});
 
-		services.AddProblemDetails();
+        services.AddHttpContextAccessor();
+
+        services.AddProblemDetails();
 		services.AddExceptionHandler<GlobalExceptionHandler>();
 
-		services.AddScoped<IPasswordService, PasswordService>();
-		services.AddScoped<ITokenService, TokenService>();
+		services.AddSingleton<IPasswordService, PasswordService>();
+		services.AddSingleton<ITokenService, TokenService>();
 		services.AddScoped<ICurrentUserService, CurrentUserService>();
 
 		services.AddScoped<IAuthRepository, AuthRepository>();

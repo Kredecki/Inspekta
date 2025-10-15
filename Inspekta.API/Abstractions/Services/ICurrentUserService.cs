@@ -5,6 +5,6 @@ namespace Inspekta.API.Abstractions.Services;
 
 public interface ICurrentUserService
 {
-    Guid GetId(ClaimsPrincipal User);
-    EUserRole GetRole(ClaimsPrincipal User);
+    public Guid GetId();
+    public EUserRole GetRole();
 }

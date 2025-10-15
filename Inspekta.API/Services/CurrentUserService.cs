@@ -4,18 +4,27 @@ using System.Security.Claims;
 
 namespace Inspekta.API.Services;
 
-public class CurrentUserService : ICurrentUserService
+public class CurrentUserService(IHttpContextAccessor accessor) : ICurrentUserService
 {
-    public Guid GetId(ClaimsPrincipal User)
-        => Guid.Parse(User.FindFirstValue(ClaimTypes.Sid)!);
-
-    public EUserRole GetRole(ClaimsPrincipal User)
+    public Guid GetId()
     {
-        return User.FindAll(ClaimTypes.Role)
-            .Select(c => c.Value)
-            .Select(v => Enum.TryParse<EUserRole>(v, ignoreCase: true, out var r) ? (EUserRole?)r : null)
-            .Where(r => r.HasValue)
-            .Select(r => r!.Value)
-            .First();
+        var user = accessor.HttpContext?.User;
+        var sid = user?.FindFirstValue(ClaimTypes.Sid);
+
+        return sid is not null && Guid.TryParse(sid, out var id)
+            ? id
+            : throw new InvalidOperationException("Brak SID w kontekście.");
+    }
+
+    public EUserRole GetRole()
+    {
+        var user = accessor.HttpContext?.User;
+        var role = user?.FindAll(ClaimTypes.Role)
+                       .Select(c => c.Value)
+                       .FirstOrDefault();
+
+        return Enum.TryParse<EUserRole>(role, true, out var r)
+            ? r
+            : throw new InvalidOperationException("Brak roli w kontekście.");
     }
 }

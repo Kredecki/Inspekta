@@ -31,9 +31,10 @@ public static class DependencyInjection
 			}
 		});
 
-		services.AddScoped<JwtAuthenticationStateProvider>();
-		services.AddScoped<AuthenticationStateProvider, JwtAuthenticationStateProvider>();
+        services.AddScoped<JwtAuthenticationStateProvider>();
+        services.AddScoped<AuthenticationStateProvider>(sp =>
+            sp.GetRequiredService<JwtAuthenticationStateProvider>());
 
-		return services;
+        return services;
 	}
 }
