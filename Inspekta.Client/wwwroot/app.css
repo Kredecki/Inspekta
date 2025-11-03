@@ -6,3 +6,10 @@ body {
 .hover:hover{
     opacity: .8;
 }
+
+:root {
+    --glass-bg: rgba(255,255,255,0.1);
+    --glass-text: rgba(255,255,255,0.8);
+    --glass-border: rgba(255,255,255,0.06);
+    --glass-shadow: inset 8px 8px 9px -12px rgba(255, 255, 255, 1);
+}
