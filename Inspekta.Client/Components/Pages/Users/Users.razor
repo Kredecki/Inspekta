@@ -2,63 +2,66 @@
 @attribute [Authorize(Policy = "AdminPolicy")]
 
 <div id="main-container" @onkeydown="OnKeyDown">
-	<header>
-		<div id="header-first-container">
-			<div class="search-input">
-				<span class="material-symbols-outlined">search</span>
-				<input type="text" placeholder="Wyszukaj" @bind=SearchTerm @oninput="OnSearchAsync" />
+	<div>
+		<header>
+			<div id="header-first-container">
+				<div class="search-input">
+					<span class="material-symbols-outlined">search</span>
+					<input type="text" placeholder="Wyszukaj" @bind=SearchTerm @oninput="OnSearchAsync" />
+				</div>
 			</div>
+			<div id="header-second-container">
+				<select @onchange=OnRecordsPerPageChangeAsync>
+					<option value="10">Pokaż 10 wyników</option>
+					<option value="20">Pokaż 20 wyników</option>
+					<option value="50">Pokaż 50 wyników</option>
+					<option value="100">Pokaż 100 wyników</option>
+				</select>
+				<button type="button" @onclick="@(() => Navigation.NavigateTo($"/user?IsReadOnly=false"))">Dodaj</button>
+			</div>
+		</header>
+		<div class="table-scroll">
+			<table>
+				<thead>
+					<tr>
+						<th>
+							Lp
+							<span class="material-symbols-outlined"
+								  @onclick="@(() => SortBy(SortColumn.Id))">
+								@GetSortIcon(SortColumn.Id)
+							</span>
+						</th>
+						<th>
+							Login
+							<span class="material-symbols-outlined"
+								  @onclick="@(() => SortBy(SortColumn.Login))">
+								@GetSortIcon(SortColumn.Login)
+							</span>
+						</th>
+						<th>
+							Rola
+							<span class="material-symbols-outlined"
+								  @onclick="@(() => SortBy(SortColumn.Role))">
+								@GetSortIcon(SortColumn.Role)
+							</span>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					@for (int i = 0; i < FilteredModel.Count; i++)
+					{
+						<tr @ondblclick="@(() => Details(FilteredModel[i].Id))">
+							<td>@(i + 1)</td>
+							<td>@FilteredModel[i].Login</td>
+							<td>@FilteredModel[i].Role</td>
+						</tr>
+					}
+				</tbody>
+			</table>
 		</div>
-		<div id="header-second-container">
-			<select @onchange=OnRecordsPerPageChangeAsync>
-				<option value="10">Pokaż 10 wyników</option>
-				<option value="20">Pokaż 20 wyników</option>
-				<option value="50">Pokaż 50 wyników</option>
-				<option value="100">Pokaż 100 wyników</option>
-			</select>
-			<button type="button" @onclick="@(() => Navigation.NavigateTo($"/user?IsReadOnly=false"))">Dodaj</button>
-		</div>
-	</header>
-	<table>
-		<thead>
-			<tr>
-				<th>
-					Lp
-					<span class="material-symbols-outlined"
-						  @onclick="@(() => SortBy(SortColumn.Id))">
-						@GetSortIcon(SortColumn.Id)
-					</span>
-				</th>
-				<th>
-					Login
-					<span class="material-symbols-outlined"
-						  @onclick="@(() => SortBy(SortColumn.Login))">
-						@GetSortIcon(SortColumn.Login)
-					</span>
-				</th>
-				<th>
-					Rola
-					<span class="material-symbols-outlined"
-						  @onclick="@(() => SortBy(SortColumn.Role))">
-						@GetSortIcon(SortColumn.Role)
-					</span>
-				</th>
-			</tr>
-		</thead>
-		<tbody>
-			@foreach (var item in FilteredModel)
-			{
-				int lp = 1;
-				<tr @ondblclick="@(() => Details(item.Id))">
-					<td>@lp</td>
-					<td>@item.Login</td>
-					<td>@item.Role</td>
-				</tr>
-			}
-		</tbody>
-	</table>
+	</div>
 	<footer>
-		@if (CurrentPage - 1 >= 0)
+		@if (CurrentPage >= 1)
 		{
 			<span @onclick="@(() => ChangePageAsync(CurrentPage - 1))">
 				<span class="material-symbols-outlined">
@@ -82,7 +85,7 @@
 				<span @onclick="@(() => ChangePageAsync(0))">...</span>
 			}
 
-			@for (int i = Math.Max(CurrentPage - 2, 0); i <= Math.Min(CurrentPage + 2, Pages - 1); i++)
+			@for (int i = 0; i <= Pages - 1; i++)
 			{
 				int index = i;
 				<span class="@(index == CurrentPage ? "active" : "")"

@@ -2,6 +2,7 @@
 using Inspekta.API.Queries.Users;
 using Inspekta.Shared.DTOs;
 using Inspekta.Shared.Enums;
+using Inspekta.Shared.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -32,10 +33,18 @@ public class UsersController(IMediator mediator, ICurrentUserService currentUser
         Guid sid = currentUserService.GetId();
         EUserRole userRole = currentUserService.GetRole();
 
-        List<UserDto>? result = await mediator.Send(new GetUsersQuery(currentPage, recordsPerPage, userRole, sid), cancellationToken);
+        (List<UserDto> items, int total) = await mediator.Send(new GetUsersQuery(currentPage, recordsPerPage, userRole, sid), cancellationToken);
 
-        if (result is not null)
+        if (items is not null)
+        {
+            PagedResult<UserDto> result = new()
+            {
+                Items = items,
+                Total = total
+            };
+
             return Ok(result);
+        }
 
         return BadRequest();
     }

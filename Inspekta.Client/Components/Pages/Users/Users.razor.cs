@@ -4,12 +4,13 @@ using Microsoft.AspNetCore.Components.Web;
 using System.Globalization;
 using System.Net.Http.Json;
 using Microsoft.AspNetCore.WebUtilities;
+using Inspekta.Shared.Models;
 
 namespace Inspekta.Client.Components.Pages.Users;
 
 public partial class Users
 {
-    private List<UserDto> Model { get; set; } = [];
+    private PagedResult<UserDto> Model { get; set; } = new();
     private List<UserDto> FilteredModel { get; set; } = [];
     private Guid? OpenMenuForId { get; set; }
     private string SearchTerm { get; set; } = string.Empty;
@@ -23,10 +24,12 @@ public partial class Users
     protected override async Task OnInitializedAsync()
     {
         Model = await GetData();
-        FilteredModel = Model;
+        FilteredModel = Model.Items;
+
+        Pages = Model.Total == 0 ? 0 : (Model.Total + RecordsPerPage - 1) / RecordsPerPage;
     }
 
-    private async Task<List<UserDto>> GetData(CancellationToken cancellationToken = default)
+    private async Task<PagedResult<UserDto>> GetData(CancellationToken cancellationToken = default)
     {
         string? uri = QueryHelpers.AddQueryString("api/Users/GetPaged", new Dictionary<string, string?>
         {
@@ -35,9 +38,9 @@ public partial class Users
         });
 
         HttpResponseMessage? resp = await _HttpClient.GetAsync(uri, cancellationToken);
-        if (!resp.IsSuccessStatusCode) return [];
+        if (!resp.IsSuccessStatusCode) return new();
 
-        return await resp.Content.ReadFromJsonAsync<List<UserDto>>(cancellationToken) ?? [];
+        return await resp.Content.ReadFromJsonAsync<PagedResult<UserDto>>(cancellationToken) ?? new();
     }
 
     private void CloseMenu() => OpenMenuForId = null;
@@ -47,47 +50,27 @@ public partial class Users
         if (e.Key == "Escape") CloseMenu();
     }
 
-    private Task OnSearchAsync(ChangeEventArgs e)
+    private async Task OnSearchAsync(ChangeEventArgs e)
     {
         SearchTerm = e.Value?.ToString() ?? string.Empty;
-        FilteredModel = Model.Where(x => x.Login.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)).ToList();
-        CurrentPage = 0;
-        RecalcPagesAndClamp();
-        return Task.CompletedTask;
+
+        var items = Model.Items ?? Enumerable.Empty<UserDto>();
+
+        FilteredModel = items
+            .Where(x =>
+                (x.Login?.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase) == true) ||
+                x.Role.ToString().Contains(SearchTerm, StringComparison.OrdinalIgnoreCase))
+            .ToList();
     }
 
-    private void RecalcPagesAndClamp()
-    {
-        Pages = Math.Max(1, (int)Math.Ceiling((double)FilteredModel.Count / Math.Max(1, RecordsPerPage)));
-        CurrentPage = Math.Clamp(CurrentPage, 0, Pages - 1);
-        StateHasChanged();
-    }
-
-    private Task OnRecordsPerPageChangeAsync(ChangeEventArgs e)
+    private async Task OnRecordsPerPageChangeAsync(ChangeEventArgs e)
     {
         var value = e.Value?.ToString() ?? "10";
         RecordsPerPage = int.TryParse(value, out var n) ? n : 10;
-        RecalcPagesAndClamp();
-        return Task.CompletedTask;
-    }
 
-    private void ApplyFilterAndSort()
-    {
-        IEnumerable<UserDto> q = Model;
-
-        if (!string.IsNullOrWhiteSpace(SearchTerm))
-            q = q.Where(x => x.Login.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase));
-
-        q = CurrentSort switch
-        {
-            SortColumn.Id => (SortAsc ? q.OrderBy(x => x.Id) : q.OrderByDescending(x => x.Id)),
-            SortColumn.Login => (SortAsc ? q.OrderBy(x => x.Login) : q.OrderByDescending(x => x.Login)),
-            SortColumn.Role => (SortAsc ? q.OrderBy(x => x.Role) : q.OrderByDescending(x => x.Role)),
-            _ => q
-        };
-
-        FilteredModel = q.ToList();
-        RecalcPagesAndClamp();
+        Model = await GetData();
+        FilteredModel = Model.Items;
+        Pages = Model.Total == 0 ? 0 : (Model.Total + RecordsPerPage - 1) / RecordsPerPage;
     }
 
     private void SortBy(SortColumn column)
@@ -95,8 +78,28 @@ public partial class Users
         if (CurrentSort == column) SortAsc = !SortAsc;
         else { CurrentSort = column; SortAsc = true; }
 
-        CurrentPage = 0;
-        ApplyFilterAndSort();
+        IEnumerable<UserDto> filtr = FilteredModel;
+
+        switch (column)
+        {
+            case SortColumn.Id:
+                filtr = SortAsc
+                    ? filtr.OrderBy(x => x.Id).ToList()
+                    : filtr.OrderByDescending(x => x.Id).ToList();
+                break;
+            case SortColumn.Login:
+                filtr = SortAsc
+                    ? filtr.OrderBy(x => x.Login).ToList()
+                    : filtr.OrderByDescending(x => x.Login).ToList();
+                break;
+            case SortColumn.Role:
+                filtr = SortAsc
+                    ? filtr.OrderBy(x => x.Role.ToString()).ToList()
+                    : filtr.OrderByDescending(x => x.Role.ToString()).ToList();
+                break;
+        }
+
+        FilteredModel = filtr.ToList();
     }
 
     private string GetSortIcon(SortColumn column)
@@ -110,9 +113,10 @@ public partial class Users
         Navigation.NavigateTo($"/user/{id}?IsReadOnly=true");
     }
 
-    private Task ChangePageAsync(int page)
+    private async Task ChangePageAsync(int page)
     {
-        CurrentPage = Math.Clamp(page, 0, Math.Max(Pages - 1, 0));
-        return Task.CompletedTask;
+        CurrentPage = page;
+        Model = await GetData();
+        FilteredModel = Model.Items;
     }
 }
