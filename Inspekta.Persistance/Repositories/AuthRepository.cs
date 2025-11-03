@@ -19,7 +19,9 @@ public class AuthRepository(ApplicationDbContext dbContext) : IAuthRepository
 	public async Task<User?> Create(string login, string passwordHash, string salt, EUserRole role, Company company, Guid adminId,
 		CancellationToken cancellationToken = default)
 	{
-		User user = new()
+        dbContext.Attach(company);
+
+        User user = new()
 		{
 			Login = login,
 			PassHash = passwordHash,
