@@ -1,4 +1,5 @@
 ﻿using Blazored.LocalStorage;
+using Blazored.Toast;
 using FluentValidation;
 using Inspekta.Client.Providers;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -25,6 +26,7 @@ public static class DependencyInjection
 
 		services.AddValidatorsFromAssembly(typeof(Program).Assembly, includeInternalTypes: true);
 
+		services.AddBlazoredToast();
 		services.AddBlazoredLocalStorage();
 		services.AddAuthorizationCore(config =>
 		{

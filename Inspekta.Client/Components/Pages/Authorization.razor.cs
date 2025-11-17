@@ -1,8 +1,7 @@
-﻿using Blazored.FluentValidation;
-using Inspekta.Client.Providers;
+﻿using Inspekta.Client.Providers;
 using Inspekta.Shared.DTOs;
+using Inspekta.Shared.Models;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
 using System.Net.Http.Json;
 
 namespace Inspekta.Client.Components.Pages;
@@ -26,7 +25,10 @@ public partial class Authorization
 			if (authResponse is null) return;
 
 			await AuthProvider!.Login(authResponse);
+
+			Toast.ShowSuccess("Login successful.");
+			await Task.Delay(500);
 			Navigation.NavigateTo("/", forceLoad: true);
 		}
-	}
+    }
 }
