@@ -3,36 +3,40 @@
 @attribute [AllowAnonymous]
 
 <div id="main-container">
-	<form @onsubmit=SignIn>
+	<EditForm Model="@Model"
+			  OnValidSubmit="@SignIn">
+
+		<FluentValidationValidator />
+
 		<fieldset>
 			<legend title="Inspekta">
 				Inspekta
 			</legend>
 
 			<div class="field">
-				<input class="primary-input"
+				<InputText class="primary-input"
 					   id="login"
 					   name="login"
 					   type="text"
-					   required
 					   autocomplete="username"
 					   placeholder=" "
 					   title="Login"
-					   @bind-value=Model.Login>
+					   @bind-value=Model.Login />
 				<label for="login">Login</label>
+				<ValidationMessage For="@(() => Model.Login)" class="validator-message" />
 			</div>
 
 			<div class="field">
-				<input class="primary-input"
+				<InputText class="primary-input"
 					   id="password"
 					   name="password"
 					   type="password"
-					   required
 					   autocomplete="current-password"
 					   placeholder=" "
 					   title="Hasło"
-					   @bind-value=Model.Password>
+					   @bind-value=Model.Password />
 				<label for="password">Hasło</label>
+				<ValidationMessage For="@(() => Model.Password)" class="validator-message" />
 			</div>
 
 			<button class="primary-button hover"
@@ -41,5 +45,5 @@
 				Zaloguj się
 			</button>
 		</fieldset>
-	</form>
+	</EditForm>
 </div>

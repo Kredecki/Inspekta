@@ -1,4 +1,5 @@
 ﻿using Blazored.LocalStorage;
+using FluentValidation;
 using Inspekta.Client.Providers;
 using Microsoft.AspNetCore.Components.Authorization;
 
@@ -21,6 +22,8 @@ public static class DependencyInjection
 		services.AddScoped(sp =>
 			sp.GetRequiredService<IHttpClientFactory>().CreateClient("Inspekta")
 		);
+
+		services.AddValidatorsFromAssembly(typeof(Program).Assembly, includeInternalTypes: true);
 
 		services.AddBlazoredLocalStorage();
 		services.AddAuthorizationCore(config =>

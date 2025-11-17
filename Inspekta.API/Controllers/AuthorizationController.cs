@@ -62,9 +62,9 @@ namespace Inspekta.API.Controllers
 		[ProducesResponseType(200, Type = typeof(UserDto))]
 		[ProducesResponseType(400, Type = typeof(ProblemDetails))]
 		[Produces("application/json")]
-		public async Task<IActionResult> SignIn(UserDto dto, CancellationToken cancellationToken = default)
+		public async Task<IActionResult> SignIn(SignInDto dto, CancellationToken cancellationToken = default)
 		{
-			UserDto? result = await mediator.Send(new SignInQuery(dto), cancellationToken);
+			SignInDto? result = await mediator.Send(new SignInQuery(dto), cancellationToken);
 
 			if (result is not null)
 				return Ok(result);

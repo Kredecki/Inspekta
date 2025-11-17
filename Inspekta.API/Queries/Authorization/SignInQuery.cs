@@ -6,11 +6,11 @@ using MediatR;
 
 namespace Inspekta.API.Queries.Authorization;
 
-public sealed record SignInQuery(UserDto Dto) : IRequest<UserDto>;
+public sealed record SignInQuery(SignInDto Dto) : IRequest<SignInDto>;
 
-public class SignInQueryHandler(IAuthRepository authRepository, ITokenService tokenService, IPasswordService passwordService) : IRequestHandler<SignInQuery, UserDto>
+public class SignInQueryHandler(IAuthRepository authRepository, ITokenService tokenService, IPasswordService passwordService) : IRequestHandler<SignInQuery, SignInDto>
 {
-	public async Task<UserDto> Handle(SignInQuery request, CancellationToken cancellationToken)
+	public async Task<SignInDto> Handle(SignInQuery request, CancellationToken cancellationToken)
 	{
 		if (request.Dto.Login is null)
 			throw new Exception("E007");
@@ -26,11 +26,12 @@ public class SignInQueryHandler(IAuthRepository authRepository, ITokenService to
 		if (password != user.PassHash)
 			throw new Exception("E010");
 
-		return new UserDto
-		{
+		return new SignInDto
+        {
 			Id = user.Id,
 			Login = user.Login,
-			Token = tokenService.GenerateToken(user)
+			Token = tokenService.GenerateToken(user),
+			Role = user.Role
 		};
 	}
 }

@@ -6,8 +6,8 @@
     background: rgba(255,255,255,0.06);
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", Arial, sans-serif;
 
-    width: 40vh;
-    height: 30vh;
+    width: 20%;
+    height: 35%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -35,19 +35,21 @@ legend {
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     background: rgba(255,255,255,0.06);
+    width: 33vh;
     height: 5vh;
     color: rgba(255,255,255,0.6);
     border-color: rgba(255,255,255,0.06);
     cursor: pointer;
 }
 
-.primary-input {
+::deep .primary-input {
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", Arial, sans-serif;
     letter-spacing: 1px;
     border-radius: 1rem;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     background: rgba(0,0,0,0.06);
+    width: 30vh;
     height: 2vh;
     padding: 1vh;
     padding-left: 1.4vh;
@@ -58,7 +60,7 @@ legend {
     border-color: rgba(0,0,0,0.1);
 }
 
-    .primary-input::placeholder {
+    ::deep .primary-input::placeholder {
         color: rgba(255,255,255,0.4);
     }
 
@@ -77,14 +79,21 @@ legend {
         transition: transform .18s ease, color .18s ease, opacity .18s ease;
     }
 
-    .field .primary-input:focus ~ label,
-    .field .primary-input:not(:placeholder-shown) ~ label,
-    .field .primary-input:-webkit-autofill ~ label {
+    .field ::deep .primary-input:focus ~ label,
+    .field ::deep .primary-input:not(:placeholder-shown) ~ label,
+    .field ::deep .primary-input:-webkit-autofill ~ label {
         transform: translateY(-.6vh) scale(.6);
         color: rgba(255,255,255,0.75);
         opacity: .6;
     }
 
-.primary-input:focus {
+::deep .primary-input:focus {
     border-color: rgba(255,255,255,0.25);
+}
+
+::deep .validator-message {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", Arial, sans-serif;
+    font-size: 1vh;
+    margin-left: 1vh;
+    color: red;
 }

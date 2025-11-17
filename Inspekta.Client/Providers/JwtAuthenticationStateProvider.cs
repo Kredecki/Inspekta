@@ -34,7 +34,7 @@ public class JwtAuthenticationStateProvider(ILocalStorageService LocalStorage) :
 		return new AuthenticationState(user);
 	}
 
-	public async Task Login(UserDto model)
+	public async Task Login(SignInDto model)
 	{
 		await _localStorage.SetItemAsync(TokenKey, model.Token);
 
@@ -57,7 +57,7 @@ public class JwtAuthenticationStateProvider(ILocalStorageService LocalStorage) :
 		NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()))));
 	}
 
-	private static void CreateClaims(List<Claim> claims, UserDto? model = null)
+	private static void CreateClaims(List<Claim> claims, SignInDto? model = null)
 	{
 		if (model is null)
 			return;
