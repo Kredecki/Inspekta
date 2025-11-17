@@ -4,7 +4,8 @@
 
 <div id="main-container">
 	<EditForm Model="@Model"
-			  OnValidSubmit="@SignIn">
+			  OnValidSubmit="@SignIn"
+			  OnInvalidSubmit="@HandleInvalidSubmit">
 
 		<FluentValidationValidator />
 
@@ -23,7 +24,10 @@
 					   title="@T("login")"
 					   @bind-value=Model.Login />
 				<label for="login">@T("login")</label>
-				<ValidationMessage For="@(() => Model.Login)" class="validator-message" />
+				@if (ShowValidationMessages)
+				{
+					<ValidationMessage For="@(() => Model.Login)" class="validator-message" />				
+				}
 			</div>
 
 			<div class="field">
@@ -36,7 +40,10 @@
 					   title="@T("password")"
 					   @bind-value=Model.Password />
 				<label for="password">@T("password")</label>
-				<ValidationMessage For="@(() => Model.Password)" class="validator-message" />
+				@if (ShowValidationMessages)
+				{
+					<ValidationMessage For="@(() => Model.Password)" class="validator-message" />
+				}
 			</div>
 
 			<button class="primary-button hover"

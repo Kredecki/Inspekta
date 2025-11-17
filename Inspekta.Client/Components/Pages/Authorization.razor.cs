@@ -11,6 +11,10 @@ public partial class Authorization
 	[Inject]
 	private JwtAuthenticationStateProvider? AuthProvider { get; set; }
 	private static readonly SignInDto Model = new();
+	private bool ShowValidationMessages = false;
+
+	private void HandleInvalidSubmit()
+        => ShowValidationMessages = true;
 
     private async Task SignIn()
 	{
