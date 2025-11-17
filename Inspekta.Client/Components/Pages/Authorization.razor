@@ -9,8 +9,8 @@
 		<FluentValidationValidator />
 
 		<fieldset>
-			<legend title="Inspekta">
-				Inspekta
+			<legend title="@T("inspekta")">
+				@T("inspekta")
 			</legend>
 
 			<div class="field">
@@ -20,9 +20,9 @@
 					   type="text"
 					   autocomplete="username"
 					   placeholder=" "
-					   title="Login"
+					   title="@T("login")"
 					   @bind-value=Model.Login />
-				<label for="login">Login</label>
+				<label for="login">@T("login")</label>
 				<ValidationMessage For="@(() => Model.Login)" class="validator-message" />
 			</div>
 
@@ -33,16 +33,16 @@
 					   type="password"
 					   autocomplete="current-password"
 					   placeholder=" "
-					   title="Hasło"
+					   title="@T("password")"
 					   @bind-value=Model.Password />
-				<label for="password">Hasło</label>
+				<label for="password">@T("password")</label>
 				<ValidationMessage For="@(() => Model.Password)" class="validator-message" />
 			</div>
 
 			<button class="primary-button hover"
 					type="submit"
-					title="Zaloguj się">
-				Zaloguj się
+					title="@T("sign_in")">
+				@T("sign_in")
 			</button>
 		</fieldset>
 	</EditForm>

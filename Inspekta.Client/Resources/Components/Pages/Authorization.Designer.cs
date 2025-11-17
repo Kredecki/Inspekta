@@ -59,5 +59,95 @@ namespace Inspekta.Client.Resources.Components.Pages {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Inspekta.
+        /// </summary>
+        public static string inspekta {
+            get {
+                return ResourceManager.GetString("inspekta", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Login.
+        /// </summary>
+        public static string login {
+            get {
+                return ResourceManager.GetString("login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Login failed: .
+        /// </summary>
+        public static string login_failed {
+            get {
+                return ResourceManager.GetString("login_failed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Login is empty..
+        /// </summary>
+        public static string login_null {
+            get {
+                return ResourceManager.GetString("login_null", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Login successful..
+        /// </summary>
+        public static string login_successful {
+            get {
+                return ResourceManager.GetString("login_successful", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Password.
+        /// </summary>
+        public static string password {
+            get {
+                return ResourceManager.GetString("password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Password is incorrect..
+        /// </summary>
+        public static string password_is_incorrect {
+            get {
+                return ResourceManager.GetString("password_is_incorrect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Password is empty..
+        /// </summary>
+        public static string password_null {
+            get {
+                return ResourceManager.GetString("password_null", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Sign in.
+        /// </summary>
+        public static string sign_in {
+            get {
+                return ResourceManager.GetString("sign_in", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu User doesn&apos;t exist.
+        /// </summary>
+        public static string user_doesnt_exist {
+            get {
+                return ResourceManager.GetString("user_doesnt_exist", resourceCulture);
+            }
+        }
     }
 }

@@ -14,18 +14,18 @@ public class SignInQueryHandler(IAuthRepository authRepository, ITokenService to
 	public async Task<SignInDto> Handle(SignInQuery request, CancellationToken cancellationToken)
 	{
 		if (request.Dto.Login is null)
-			throw new InspektaValidationException("E007");
+			throw new InspektaValidationException("login_null");
 
 		if (request.Dto.Password is null)
-			throw new InspektaValidationException("E008");
+			throw new InspektaValidationException("password_null");
 
 		User? user =
-			await authRepository.CheckAuthCredentialsAsync(request.Dto.Login, cancellationToken) ?? throw new InspektaValidationException("E009");
+			await authRepository.CheckAuthCredentialsAsync(request.Dto.Login, cancellationToken) ?? throw new InspektaValidationException("user_doesnt_exist");
 
 		string? password = passwordService.HashPassword(request.Dto.Password, user.Salt);
 
 		if (password != user.PassHash)
-			throw new InspektaValidationException("E010");
+			throw new InspektaValidationException("password_is_incorrect");
 
 		return new SignInDto
         {

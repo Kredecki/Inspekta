@@ -55,12 +55,21 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Authorization.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\Validators\SignInValidator.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SignInValidator.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Update="Resources\Components\Pages\Authorization.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Authorization.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Validators\SignInValidator.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SignInValidator.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 

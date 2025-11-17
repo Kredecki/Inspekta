@@ -26,7 +26,7 @@ public partial class Authorization
 
 			await AuthProvider!.Login(authResponse);
 
-			Toast.ShowSuccess("Login successful.");
+			Toast.ShowSuccess(T("login_successful"));
 			await Task.Delay(500);
 			Navigation.NavigateTo("/", forceLoad: true);
 		}
@@ -34,7 +34,8 @@ public partial class Authorization
 		{
             var error = await response.Content.ReadFromJsonAsync<Error>(); 
 			
-			Toast.ShowError($"Login failed: {error.Detail}");
+			if(error is not null)
+				Toast.ShowError(T("login_failed") + T(error.Detail!));
         }
     }
 }

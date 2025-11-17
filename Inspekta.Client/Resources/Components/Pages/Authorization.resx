@@ -117,4 +117,44 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="inspekta" xml:space="preserve">
+    <value>Inspekta</value>
+    <comment>Inspekta</comment>
+  </data>
+  <data name="login" xml:space="preserve">
+    <value>Login</value>
+    <comment>Login</comment>
+  </data>
+  <data name="login_failed" xml:space="preserve">
+    <value>Login failed: </value>
+    <comment>login_failed</comment>
+  </data>
+  <data name="login_null" xml:space="preserve">
+    <value>Login is empty.</value>
+    <comment>login_null</comment>
+  </data>
+  <data name="login_successful" xml:space="preserve">
+    <value>Login successful.</value>
+    <comment>login_successful</comment>
+  </data>
+  <data name="password" xml:space="preserve">
+    <value>Password</value>
+    <comment>Password</comment>
+  </data>
+  <data name="password_is_incorrect" xml:space="preserve">
+    <value>Password is incorrect.</value>
+    <comment>password_is_incorrect</comment>
+  </data>
+  <data name="password_null" xml:space="preserve">
+    <value>Password is empty.</value>
+    <comment>password_null</comment>
+  </data>
+  <data name="sign_in" xml:space="preserve">
+    <value>Sign in</value>
+    <comment>Sign_in</comment>
+  </data>
+  <data name="user_doesnt_exist" xml:space="preserve">
+    <value>User doesn't exist</value>
+    <comment>user_doesnt_exist</comment>
+  </data>
 </root>

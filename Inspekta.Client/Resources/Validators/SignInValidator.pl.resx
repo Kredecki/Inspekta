@@ -117,34 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="inspekta" xml:space="preserve">
-    <value>Inspekta</value>
+  <data name="login_required" xml:space="preserve">
+    <value>Pole login jest wymagane.</value>
   </data>
-  <data name="login" xml:space="preserve">
-    <value>Login</value>
-  </data>
-  <data name="login_failed" xml:space="preserve">
-    <value>Login failed: </value>
-  </data>
-  <data name="login_null" xml:space="preserve">
-    <value>Login is empty.</value>
-  </data>
-  <data name="login_successful" xml:space="preserve">
-    <value>Login successful.</value>
-  </data>
-  <data name="password" xml:space="preserve">
-    <value>Password</value>
-  </data>
-  <data name="password_is_incorrect" xml:space="preserve">
-    <value>Password is incorrect.</value>
-  </data>
-  <data name="password_null" xml:space="preserve">
-    <value>Password is empty.</value>
-  </data>
-  <data name="sign_in" xml:space="preserve">
-    <value>Sign in</value>
-  </data>
-  <data name="user_doesnt_exist" xml:space="preserve">
-    <value>User doesn't exist</value>
+  <data name="password_required" xml:space="preserve">
+    <value>Pole hasło jest wymagane.</value>
   </data>
 </root>

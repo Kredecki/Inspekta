@@ -117,4 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="inspekta" xml:space="preserve">
+    <value>Inspekta</value>
+  </data>
+  <data name="login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="login_failed" xml:space="preserve">
+    <value>Logowanie nie powiodło się: </value>
+  </data>
+  <data name="login_null" xml:space="preserve">
+    <value>Pole login jest puste.</value>
+  </data>
+  <data name="login_successful" xml:space="preserve">
+    <value>Logowanie powiodło się.</value>
+  </data>
+  <data name="password" xml:space="preserve">
+    <value>Hasło</value>
+  </data>
+  <data name="password_is_incorrect" xml:space="preserve">
+    <value>Hasło jest nieprawidłowe.</value>
+  </data>
+  <data name="password_null" xml:space="preserve">
+    <value>Pole hasło jest puste.</value>
+  </data>
+  <data name="sign_in" xml:space="preserve">
+    <value>Zaloguj się</value>
+  </data>
+  <data name="user_doesnt_exist" xml:space="preserve">
+    <value>Użytkownik nie istnieje</value>
+  </data>
 </root>
