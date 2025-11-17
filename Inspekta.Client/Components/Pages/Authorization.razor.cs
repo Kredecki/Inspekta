@@ -14,25 +14,24 @@ public partial class Authorization
 
     private async Task SignIn()
 	{
-        var response = await _HttpClient.PostAsJsonAsync<SignInDto>("Api/Authorization/SignIn", Model);
+        HttpResponseMessage? response = await _HttpClient.PostAsJsonAsync<SignInDto>("Api/Authorization/SignIn", Model);
 
 		if (response is null)
 			return;
 
 		if (response.IsSuccessStatusCode)
 		{
-			var authResponse = await response.Content.ReadFromJsonAsync<SignInDto>();
+			SignInDto? authResponse = await response.Content.ReadFromJsonAsync<SignInDto>();
 			if (authResponse is null) return;
 
 			await AuthProvider!.Login(authResponse);
 
 			Toast.ShowSuccess(T("login_successful"));
-			await Task.Delay(500);
 			Navigation.NavigateTo("/", forceLoad: true);
 		}
 		else 
 		{
-            var error = await response.Content.ReadFromJsonAsync<Error>(); 
+            InspektaError? error = await response.Content.ReadFromJsonAsync<InspektaError>(); 
 			
 			if(error is not null)
 				Toast.ShowError(T("login_failed") + T(error.Detail!));
