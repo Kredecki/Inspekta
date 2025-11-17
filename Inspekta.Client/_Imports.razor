@@ -10,8 +10,11 @@
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Authorization
 @using Blazored.FluentValidation
+@using Blazored.Toast
+@using Blazored.Toast.Services
 
 @inject NavigationManager Navigation
 @inject AuthenticationStateProvider AuthStateProvider
 @inject IHttpClientFactory httpClientFactory
 @inject HttpClient _HttpClient
+@inject IToastService Toast

@@ -1,4 +1,5 @@
 ﻿using Inspekta.API.Abstractions.Services;
+using Inspekta.API.Exceptions;
 using Inspekta.Persistance.Abstractions.Repositories;
 using Inspekta.Persistance.Entities;
 using Inspekta.Shared.DTOs;
@@ -13,18 +14,18 @@ public class SignInQueryHandler(IAuthRepository authRepository, ITokenService to
 	public async Task<SignInDto> Handle(SignInQuery request, CancellationToken cancellationToken)
 	{
 		if (request.Dto.Login is null)
-			throw new Exception("E007");
+			throw new InspektaValidationException("E007");
 
 		if (request.Dto.Password is null)
-			throw new Exception("E008");
+			throw new InspektaValidationException("E008");
 
 		User? user =
-			await authRepository.CheckAuthCredentialsAsync(request.Dto.Login, cancellationToken) ?? throw new Exception("E009");
+			await authRepository.CheckAuthCredentialsAsync(request.Dto.Login, cancellationToken) ?? throw new InspektaValidationException("E009");
 
 		string? password = passwordService.HashPassword(request.Dto.Password, user.Salt);
 
 		if (password != user.PassHash)
-			throw new Exception("E010");
+			throw new InspektaValidationException("E010");
 
 		return new SignInDto
         {

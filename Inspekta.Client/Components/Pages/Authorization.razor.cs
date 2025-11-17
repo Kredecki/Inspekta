@@ -30,5 +30,11 @@ public partial class Authorization
 			await Task.Delay(500);
 			Navigation.NavigateTo("/", forceLoad: true);
 		}
+		else 
+		{
+            var error = await response.Content.ReadFromJsonAsync<Error>(); 
+			
+			Toast.ShowError($"Login failed: {error.Detail}");
+        }
     }
 }
