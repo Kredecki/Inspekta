@@ -12,9 +12,12 @@
 @using Blazored.FluentValidation
 @using Blazored.Toast
 @using Blazored.Toast.Services
+@using Microsoft.Extensions.Localization
 
 @inject NavigationManager Navigation
 @inject AuthenticationStateProvider AuthStateProvider
 @inject IHttpClientFactory httpClientFactory
 @inject HttpClient _HttpClient
 @inject IToastService Toast
+
+@inherits LocalizedComponentBase
