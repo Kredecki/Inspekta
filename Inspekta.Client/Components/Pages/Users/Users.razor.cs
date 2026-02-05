@@ -1,32 +1,28 @@
-﻿using Inspekta.Shared.DTOs;
+﻿using Azure;
+using Inspekta.Shared.DTOs;
+using Inspekta.Shared.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.WebUtilities;
 using System.Globalization;
 using System.Net.Http.Json;
-using Microsoft.AspNetCore.WebUtilities;
-using Inspekta.Shared.Models;
 
 namespace Inspekta.Client.Components.Pages.Users;
 
 public partial class Users
 {
     private PagedResult<UserDto> Model { get; set; } = new();
-    private List<UserDto> FilteredModel { get; set; } = [];
-    private Guid? OpenMenuForId { get; set; }
-    private string SearchTerm { get; set; } = string.Empty;
     private int CurrentPage { get; set; } = default;
-    private int Pages { get; set; } = default;
     private int RecordsPerPage { get; set; } = 10;
-    private enum SortColumn { None, Id, Login, Role }
-    private SortColumn CurrentSort { get; set; } = SortColumn.None;
-    private bool SortAsc { get; set; } = true;
+    private int Pages { get; set; } = default;
+    private string SearchTerm { get; set; } = string.Empty;
+    private string CurrentSort { get; set; } = string.Empty;
+    private bool SortDesc { get; set; } = false;
 
     protected override async Task OnInitializedAsync()
     {
         Model = await GetData();
-        FilteredModel = Model.Items;
-
-        Pages = Model.Total == 0 ? 0 : (Model.Total + RecordsPerPage - 1) / RecordsPerPage;
+        Pages = CountPages();
     }
 
     private async Task<PagedResult<UserDto>> GetData(CancellationToken cancellationToken = default)
@@ -34,33 +30,37 @@ public partial class Users
         string? uri = QueryHelpers.AddQueryString("api/Users/GetPaged", new Dictionary<string, string?>
         {
             ["currentPage"] = CurrentPage.ToString(CultureInfo.InvariantCulture),
-            ["recordsPerPage"] = RecordsPerPage.ToString(CultureInfo.InvariantCulture)
+            ["recordsPerPage"] = RecordsPerPage.ToString(CultureInfo.InvariantCulture),
+            ["searchTerm"] = SearchTerm,
+            ["sortColumn"] = CurrentSort,
+            ["sortDescending"] = SortDesc.ToString(CultureInfo.InvariantCulture),
         });
 
-        HttpResponseMessage? resp = await _HttpClient.GetAsync(uri, cancellationToken);
-        if (!resp.IsSuccessStatusCode) return new();
+        HttpResponseMessage? response = await _HttpClient.GetAsync(uri, cancellationToken);
 
-        return await resp.Content.ReadFromJsonAsync<PagedResult<UserDto>>(cancellationToken) ?? new();
+        if (!response.IsSuccessStatusCode)
+        {
+            InspektaError? error = await response.Content.ReadFromJsonAsync<InspektaError>(cancellationToken);
+
+            if (error is not null)
+                Toast.ShowError(T("get_data_failed") + T(error.Detail!));
+
+            return new();
+        }
+
+        return await response.Content.ReadFromJsonAsync<PagedResult<UserDto>>(cancellationToken) ?? new();
     }
 
-    private void CloseMenu() => OpenMenuForId = null;
-
-    private void OnKeyDown(KeyboardEventArgs e)
-    {
-        if (e.Key == "Escape") CloseMenu();
-    }
+    private int CountPages()
+        => Model.Total == 0 ? 0 : (Model.Total + RecordsPerPage - 1) / RecordsPerPage;
 
     private async Task OnSearchAsync(ChangeEventArgs e)
     {
         SearchTerm = e.Value?.ToString() ?? string.Empty;
 
-        var items = Model.Items ?? Enumerable.Empty<UserDto>();
-
-        FilteredModel = items
-            .Where(x =>
-                (x.Login?.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase) == true) ||
-                x.Role.ToString().Contains(SearchTerm, StringComparison.OrdinalIgnoreCase))
-            .ToList();
+        CurrentPage = 0;
+        Model = await GetData();
+        Pages = CountPages();
     }
 
     private async Task OnRecordsPerPageChangeAsync(ChangeEventArgs e)
@@ -68,55 +68,34 @@ public partial class Users
         var value = e.Value?.ToString() ?? "10";
         RecordsPerPage = int.TryParse(value, out var n) ? n : 10;
 
+        CurrentPage = 0;
         Model = await GetData();
-        FilteredModel = Model.Items;
-        Pages = Model.Total == 0 ? 0 : (Model.Total + RecordsPerPage - 1) / RecordsPerPage;
+        Pages = CountPages();
     }
 
-    private void SortBy(SortColumn column)
+    private async Task SortBy(string column)
     {
-        if (CurrentSort == column) SortAsc = !SortAsc;
-        else { CurrentSort = column; SortAsc = true; }
+        if (CurrentSort == column) SortDesc = !SortDesc;
+        else { CurrentSort = column; SortDesc = false; }
 
-        IEnumerable<UserDto> filtr = FilteredModel;
+        CurrentSort = column;
 
-        switch (column)
-        {
-            case SortColumn.Id:
-                filtr = SortAsc
-                    ? filtr.OrderBy(x => x.Id).ToList()
-                    : filtr.OrderByDescending(x => x.Id).ToList();
-                break;
-            case SortColumn.Login:
-                filtr = SortAsc
-                    ? filtr.OrderBy(x => x.Login).ToList()
-                    : filtr.OrderByDescending(x => x.Login).ToList();
-                break;
-            case SortColumn.Role:
-                filtr = SortAsc
-                    ? filtr.OrderBy(x => x.Role.ToString()).ToList()
-                    : filtr.OrderByDescending(x => x.Role.ToString()).ToList();
-                break;
-        }
-
-        FilteredModel = filtr.ToList();
+        CurrentPage = 0;
+        Model = await GetData();
+        Pages = CountPages();
     }
 
-    private string GetSortIcon(SortColumn column)
+    private string GetSortIcon(string column)
         => CurrentSort == column
-           ? (SortAsc ? "switch_left" : "switch_right")
+           ? (SortDesc ? "switch_left" : "switch_right")
            : "switch_right";
 
     private void Details(Guid id)
-    {
-        CloseMenu();
-        Navigation.NavigateTo($"/user/{id}?IsReadOnly=true");
-    }
+        => Navigation.NavigateTo($"/user/{id}?IsReadOnly=true");
 
     private async Task ChangePageAsync(int page)
     {
         CurrentPage = page;
         Model = await GetData();
-        FilteredModel = Model.Items;
     }
 }

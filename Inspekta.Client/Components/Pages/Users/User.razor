@@ -1,1 +1,10 @@
 ﻿@page "/user/{Id:guid}"
+
+<EditForm>
+	<DataAnnotationsValidator />
+
+	<InputText @bind-Value="Model.Login" />
+	<InputText type="password" @bind-Value="Model.Password" />
+	<InputText type="password" @bind-Value="Model.ConfirmPassword" />
+
+</EditForm>

@@ -1,5 +1,5 @@
-﻿using Inspekta.API.Abstractions.Services;
-using Inspekta.API.Queries.Users;
+﻿using Inspekta.Infrastructure.Abstractions.Services;
+using Inspekta.Infrastructure.Queries.Users;
 using Inspekta.Shared.DTOs;
 using Inspekta.Shared.Enums;
 using Inspekta.Shared.Models;
@@ -27,13 +27,25 @@ public class UsersController(IMediator mediator, ICurrentUserService currentUser
     [ProducesResponseType(200, Type = typeof(List<UserDto>))]
     [ProducesResponseType(400, Type = typeof(ProblemDetails))]
     [Produces("application/json")]
-    public async Task<IActionResult> GetPagedUsers([FromQuery] int currentPage = 0, [FromQuery] int recordsPerPage = 10, 
+    public async Task<IActionResult> GetPagedUsers(
+        [FromQuery] int currentPage = 0, 
+        [FromQuery] int recordsPerPage = 10, 
+        [FromQuery] string? searchTerm = default,
+        [FromQuery] string? sortColumn = default,
+        [FromQuery] bool sortDescending = false,
         CancellationToken cancellationToken = default)
     {
         Guid sid = currentUserService.GetId();
         EUserRole userRole = currentUserService.GetRole();
 
-        (List<UserDto> items, int total) = await mediator.Send(new GetUsersQuery(currentPage, recordsPerPage, userRole, sid), cancellationToken);
+        (List<UserDto> items, int total) = await mediator.Send(new GetUsersQuery(
+            currentPage, 
+            recordsPerPage, 
+            searchTerm, 
+            sortColumn,
+            sortDescending,
+            userRole, 
+            sid), cancellationToken);
 
         if (items is not null)
         {

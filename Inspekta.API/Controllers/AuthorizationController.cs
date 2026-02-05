@@ -1,5 +1,5 @@
-﻿using Inspekta.API.Abstractions.Services;
-using Inspekta.API.Queries.Authorization;
+﻿using Inspekta.Infrastructure.Abstractions.Services;
+using Inspekta.Infrastructure.Queries.Authorization;
 using Inspekta.Shared.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

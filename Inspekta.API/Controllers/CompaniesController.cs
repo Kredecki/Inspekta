@@ -1,5 +1,5 @@
-﻿using Inspekta.API.Abstractions.Services;
-using Inspekta.API.Queries.Companies;
+﻿using Inspekta.Infrastructure.Abstractions.Services;
+using Inspekta.Infrastructure.Queries.Companies;
 using Inspekta.Shared.DTOs;
 using Inspekta.Shared.Enums;
 using MediatR;

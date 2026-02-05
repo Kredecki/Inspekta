@@ -1,40 +1,21 @@
 ﻿using Inspekta.Persistance.Abstractions.Repositories;
 using Inspekta.Persistance.Entities;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.Design;
 
 namespace Inspekta.Persistance.Repositories;
 
 public class UsersRepository(ApplicationDbContext dbContext) : IUsersRepository
 {
-    public async Task<List<User>> GetUsers(CancellationToken cancellationToken = default)
-        => await dbContext.Users
-            .AsNoTracking()
-            .ToListAsync(cancellationToken);
-
-    public async Task<List<User>> GetPagedUsers(int currentPage, int recordsPerPage, 
+    public async Task<IEnumerable<User>> GetUsers(
         CancellationToken cancellationToken = default)
-        => await dbContext.Users
-            .Skip(currentPage * recordsPerPage)
-            .Take(recordsPerPage)
-            .AsNoTracking()
-            .ToListAsync(cancellationToken);
+    {
+        IQueryable<User> query = dbContext.Users
+            .AsNoTracking();
 
-    public async Task<List<User>> GetCompanyUsers(Guid companyId, 
-        CancellationToken cancellationToken = default)
-        => await dbContext.Users
-             .Where(u => u.CompanyId == companyId)
+        return await query
             .AsNoTracking()
             .ToListAsync(cancellationToken);
-
-    public async Task<List<User>> GetPagedCompanyUsers(Guid companyId, int currentPage, int recordsPerPage, 
-        CancellationToken cancellationToken = default)
-        => await dbContext.Users
-            .Where(u => u.CompanyId == companyId)
-            .Skip(currentPage * recordsPerPage)
-            .Take(recordsPerPage)
-            .AsNoTracking()
-            .ToListAsync(cancellationToken);
+    }
 
     public async Task<User?> GetUserById(Guid id,
         CancellationToken cancellationToken = default)

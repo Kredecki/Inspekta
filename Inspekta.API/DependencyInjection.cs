@@ -1,11 +1,12 @@
-﻿using Inspekta.API.Abstractions.Services;
-using Inspekta.API.Handlers;
-using Inspekta.API.Services;
-using Inspekta.Persistance;
-using Inspekta.Persistance.Abstractions.Repositories;
+﻿using Inspekta.Persistance.Abstractions.Repositories;
+using Inspekta.Infrastructure.Abstractions.Services;
+using Inspekta.Infrastructure.Abstractions.Helpers;
 using Inspekta.Persistance.Repositories;
+using Inspekta.Infrastructure.Services;
+using Inspekta.Infrastructure.Helpers;
+using Inspekta.Infrastructure.Queries;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
+using Inspekta.Persistance;
 
 namespace Inspekta.API;
 
@@ -13,35 +14,50 @@ public static class DependencyInjection
 {
 	public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration)
 	{
-		Assembly? assembly = Assembly.GetExecutingAssembly();
-		services.AddMediatR(configuration => configuration.RegisterServicesFromAssembly(assembly));
+        services.AddHttpContextAccessor();
 
-		services.AddCors(options =>
+        #region MediatR
+        services.AddMediatR(configuration => configuration.RegisterServicesFromAssembly(typeof(ICommandQuery).Assembly));
+        #endregion
+
+        #region Cors
+        services.AddCors(options =>
 		{
 			options.AddPolicy("AllowedOrigins",
 				bldr => bldr.WithOrigins(configuration["AllowedOrigin"]!)
 								  .AllowAnyHeader()
 								  .AllowAnyMethod());
 		});
+        #endregion
 
-		services.AddDbContext<ApplicationDbContext>(options =>
+        #region Database
+        services.AddDbContext<ApplicationDbContext>(options =>
 		{
 			options.UseNpgsql(configuration.GetConnectionString("InspektaDb"));
 		});
+        #endregion
 
-        services.AddHttpContextAccessor();
-
+        #region Exceptions
         services.AddProblemDetails();
 		services.AddExceptionHandler<GlobalExceptionHandler>();
+        #endregion
 
-		services.AddSingleton<IPasswordService, PasswordService>();
+        #region Helpers
+        services.AddScoped<IFilterHelper, FilterHelper>();
+        #endregion
+
+        #region Services
+        services.AddSingleton<IPasswordService, PasswordService>();
 		services.AddSingleton<ITokenService, TokenService>();
 		services.AddScoped<ICurrentUserService, CurrentUserService>();
+        #endregion
 
-		services.AddScoped<IAuthRepository, AuthRepository>();
+        #region Repositories
+        services.AddScoped<IAuthRepository, AuthRepository>();
 		services.AddScoped<ICompaniesRepository, CompaniesRepository>();
 		services.AddScoped<IUsersRepository, UsersRepository>();
+        #endregion
 
-		return services;
+        return services;
 	}
 }

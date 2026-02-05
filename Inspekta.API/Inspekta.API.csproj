@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MediatR" Version="13.0.0" />
+    <PackageReference Include="MediatR" Version="14.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.18" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.18" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.18">
@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Inspekta.Infrastructure\Inspekta.Infrastructure.csproj" />
     <ProjectReference Include="..\Inspekta.Persistance\Inspekta.Persistance.csproj" />
     <ProjectReference Include="..\Inspekta.Shared\Inspekta.Shared.csproj" />
   </ItemGroup>
