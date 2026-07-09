@@ -98,4 +98,7 @@ public partial class Users
         CurrentPage = page;
         Model = await GetData();
     }
+
+    private int GetRowNumber(int index)
+        => CurrentPage * RecordsPerPage + index + 1;
 }

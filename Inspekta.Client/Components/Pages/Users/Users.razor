@@ -51,7 +51,7 @@
 					@for (int i = 0; i < Model.Items.Count; i++)
 					{
 						<tr @ondblclick="@(() => Details(Model.Items[i].Id))">
-							<td>@(i + 1)</td>
+							<td>@GetRowNumber(i)</td>
 							<td>@Model.Items[i].Login</td>
 							<td>@Model.Items[i].Role</td>
 						</tr>
