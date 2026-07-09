@@ -5,7 +5,7 @@
 			<span class="material-symbols-outlined">
 				arrow_back_ios
 			</span>
-			Poprzednia
+			@T("Previous")
 		</span>
 	}
 	else
@@ -14,7 +14,7 @@
 			<span class="material-symbols-outlined">
 				arrow_back_ios
 			</span>
-			Poprzednia
+			@T("Previous")
 		</span>
 	}
 	<div class="pagger">
@@ -40,7 +40,7 @@
 	@if (CurrentPage + 1 <= Pages - 1)
 	{
 		<span @onclick="@(() => ChangePage(CurrentPage + 1))">
-			Następna
+			@T("Next")
 			<span class="material-symbols-outlined">
 				arrow_forward_ios
 			</span>
@@ -49,7 +49,7 @@
 	else
 	{
 		<span class="disabled">
-			Następna
+			@T("Next")
 			<span class="material-symbols-outlined">
 				arrow_forward_ios
 			</span>

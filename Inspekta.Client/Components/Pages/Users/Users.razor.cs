@@ -1,8 +1,6 @@
-﻿using Azure;
-using Inspekta.Shared.DTOs;
+﻿using Inspekta.Shared.DTOs;
 using Inspekta.Shared.Models;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Globalization;
 using System.Net.Http.Json;
