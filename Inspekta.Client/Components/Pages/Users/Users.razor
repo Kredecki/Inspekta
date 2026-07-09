@@ -60,62 +60,7 @@
 			</table>
 		</div>
 	</div>
-	<footer>
-		@if (CurrentPage >= 1)
-		{
-			<span @onclick="@(() => ChangePageAsync(CurrentPage - 1))">
-				<span class="material-symbols-outlined">
-					arrow_back_ios
-				</span>
-				Poprzednia
-			</span>
-		}
-		else
-		{
-			<span class="disabled">
-				<span class="material-symbols-outlined">
-					arrow_back_ios
-				</span>
-				Poprzednia
-			</span>
-		}
-		<div class="pagger">
-			@if (CurrentPage - 2 > 0)
-			{
-				<span @onclick="@(() => ChangePageAsync(0))">...</span>
-			}
-
-			@for (int i = 0; i <= Pages - 1; i++)
-			{
-				int index = i;
-				<span class="@(index == CurrentPage ? "active" : "")"
-					  @onclick=@(() => ChangePageAsync(index))>
-					@(index + 1)
-				</span>
-			}
-
-			@if (CurrentPage + 2 < Pages - 1)
-			{
-				<span @onclick="@(() => ChangePageAsync(Pages - 1))">...</span>
-			}
-		</div>
-		@if (CurrentPage + 1 <= Pages - 1)
-		{
-			<span @onclick="@(() => ChangePageAsync(CurrentPage + 1))">
-				Następna
-				<span class="material-symbols-outlined">
-					arrow_forward_ios
-				</span>
-			</span>
-		}
-		else
-		{
-			<span class="disabled">
-				Następna
-				<span class="material-symbols-outlined">
-					arrow_forward_ios
-				</span>
-			</span>
-		}
-	</footer>
+	<Pagger CurrentPage="@CurrentPage"
+			Pages="@Pages"
+			CurrentPageChanged="ChangePageAsync" />
 </div>

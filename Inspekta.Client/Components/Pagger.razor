@@ -1,0 +1,58 @@
+﻿<footer>
+	@if (CurrentPage >= 1)
+	{
+		<span @onclick="@(() => ChangePage(CurrentPage - 1))">
+			<span class="material-symbols-outlined">
+				arrow_back_ios
+			</span>
+			Poprzednia
+		</span>
+	}
+	else
+	{
+		<span class="disabled">
+			<span class="material-symbols-outlined">
+				arrow_back_ios
+			</span>
+			Poprzednia
+		</span>
+	}
+	<div class="pagger">
+		@if (CurrentPage - 2 > 0)
+		{
+			<span @onclick="@(() => ChangePage(0))">...</span>
+		}
+
+		@for (int i = 0; i <= Pages - 1; i++)
+		{
+			int index = i;
+			<span class="@(index == CurrentPage ? "active" : "")"
+				  @onclick=@(() => ChangePage(index))>
+				@(index + 1)
+			</span>
+		}
+
+		@if (CurrentPage + 2 < Pages - 1)
+		{
+			<span @onclick="@(() => ChangePage(Pages - 1))">...</span>
+		}
+	</div>
+	@if (CurrentPage + 1 <= Pages - 1)
+	{
+		<span @onclick="@(() => ChangePage(CurrentPage + 1))">
+			Następna
+			<span class="material-symbols-outlined">
+				arrow_forward_ios
+			</span>
+		</span>
+	}
+	else
+	{
+		<span class="disabled">
+			Następna
+			<span class="material-symbols-outlined">
+				arrow_forward_ios
+			</span>
+		</span>
+	}
+</footer>
