@@ -52,19 +52,18 @@ public partial class Users
     private int CountPages()
         => Model.Total == 0 ? 0 : (Model.Total + RecordsPerPage - 1) / RecordsPerPage;
 
-    private async Task OnSearchAsync(ChangeEventArgs e)
+    private async Task OnSearchChangedAsync(string value)
     {
-        SearchTerm = e.Value?.ToString() ?? string.Empty;
+        SearchTerm = value;
 
         CurrentPage = 0;
         Model = await GetData();
         Pages = CountPages();
     }
 
-    private async Task OnRecordsPerPageChangeAsync(ChangeEventArgs e)
+    private async Task OnRecordsPerPageChangedAsync(int value)
     {
-        var value = e.Value?.ToString() ?? "10";
-        RecordsPerPage = int.TryParse(value, out var n) ? n : 10;
+        RecordsPerPage = value;
 
         CurrentPage = 0;
         Model = await GetData();
@@ -99,4 +98,9 @@ public partial class Users
 
     private int GetRowNumber(int index)
         => CurrentPage * RecordsPerPage + index + 1;
+
+    private void AddUser()
+    {
+        Navigation.NavigateTo("/user?IsReadOnly=false");
+    }
 }

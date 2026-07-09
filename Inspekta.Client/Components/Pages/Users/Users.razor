@@ -3,23 +3,12 @@
 
 <div id="main-container">
 	<div>
-		<header>
-			<div id="header-first-container">
-				<div class="search-input">
-					<span class="material-symbols-outlined">search</span>
-					<input type="text" placeholder="Wyszukaj" @bind=SearchTerm @oninput="OnSearchAsync" />
-				</div>
-			</div>
-			<div id="header-second-container">
-				<select @onchange=OnRecordsPerPageChangeAsync>
-					<option value="10">Pokaż 10 wyników</option>
-					<option value="20">Pokaż 20 wyników</option>
-					<option value="50">Pokaż 50 wyników</option>
-					<option value="100">Pokaż 100 wyników</option>
-				</select>
-				<button type="button" @onclick="@(() => Navigation.NavigateTo($"/user?IsReadOnly=false"))">Dodaj</button>
-			</div>
-		</header>
+		<TableHeader
+			SearchTerm="@SearchTerm"
+			SearchTermChanged="OnSearchChangedAsync"
+			RecordsPerPage="@RecordsPerPage"
+			RecordsPerPageChanged="OnRecordsPerPageChangedAsync"
+			AddClicked="AddUser" />
 		<div class="table-scroll">
 			<table>
 				<thead>

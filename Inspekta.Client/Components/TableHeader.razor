@@ -1,0 +1,29 @@
+﻿<header>
+    <div id="header-first-container">
+        <div class="search-input">
+            <span class="material-symbols-outlined">search</span>
+            <input type="text"
+                   placeholder="@T("Search")"
+                   value="@SearchTerm"
+                   @oninput="OnSearchInput" />
+        </div>
+    </div>
+
+    <div id="header-second-container">
+        <select value="@RecordsPerPage"
+                @onchange="OnRecordsPerPageChanged">
+            <option value="10">@T("Show10")</option>
+            <option value="20">@T("Show20")</option>
+            <option value="50">@T("Show50")</option>
+            <option value="100">@T("Show100")</option>
+        </select>
+
+        @if (ShowAddButton)
+        {
+            <button type="button"
+                    @onclick="OnAddClicked">
+                @T("Add")
+            </button>
+        }
+    </div>
+</header>
