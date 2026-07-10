@@ -7,6 +7,8 @@ public partial class User
 {
     [Parameter]
     public Guid Id { get; set; }
+    [Parameter]
+    public bool IsReadOnly { get; set; }
 
     private UserDto Model { get; set; } = new();
 }
