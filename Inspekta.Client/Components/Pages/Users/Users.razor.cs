@@ -101,6 +101,6 @@ public partial class Users
 
     private void AddUser()
     {
-        Navigation.NavigateTo("/user?IsReadOnly=false");
+        Navigation.NavigateTo($"/user/{Guid.NewGuid()}?IsReadOnly=false");
     }
 }
