@@ -1,50 +1,57 @@
 ﻿@page "/user/{Id:guid}"
 
-<form>
-	<fieldset>
-		<legend title="User">
-			User
-		</legend>
-		<div class="field">
-			<input class="primary-input"
-				   id="Login"
-				   name="Login"
-				   type="text"
-				   required
-				   placeholder=" "
-				   title="Login"
-				   disabled="@IsReadOnly">
-			<label for="Login">Login<span class="required">*</span></label>
-		</div>
+<div id="main-container">
+	<EditForm Model="@Model" OnValidSubmit="HandleValidSubmit" OnInvalidSubmit="HandleInvalidSubmit" class="user-form">
+		<fieldset>
+			<legend title="User">
+				User
+			</legend>
+			<div class="field">
+				<input class="primary-input"
+					   id="Login"
+					   name="Login"
+					   type="text"
+					   required
+					   placeholder=" "
+					   title="Login"
+					   disabled="@IsReadOnly"
+					   @bind-value="@Model.Login">
+				<label for="Login">Login<span class="required">*</span></label>
+			</div>
 
-		<div class="field">
-			<input class="primary-input"
-				   id="Password"
-				   name="Password"
-				   type="password"
-				   required
-				   placeholder=" "
-				   title="Password"
-				   disabled="@IsReadOnly">
-			<label for="Password">Password<span class="required">*</span></label>
-		</div>
+			<div class="field">
+				<input class="primary-input"
+					   id="Password"
+					   name="Password"
+					   type="password"
+					   required
+					   placeholder=" "
+					   title="Password"
+					   disabled="@IsReadOnly"
+					   @bind-value="@Model.Password">
+				<label for="Password">Password<span class="required">*</span></label>
+			</div>
 
-		<div class="field">
-			<input class="primary-input"
-				   id="ConfirmPassword"
-				   name="ConfirmPassword"
-				   type="password"
-				   required
-				   placeholder=" "
-				   title="ConfirmPassword"
-				   disabled="@IsReadOnly">
-			<label for="ConfirmPassword">Confirm Password<span class="required">*</span></label>
-		</div>
+			<div class="field">
+				<input class="primary-input"
+					   id="ConfirmPassword"
+					   name="ConfirmPassword"
+					   type="password"
+					   required
+					   placeholder=" "
+					   title="ConfirmPassword"
+					   disabled="@IsReadOnly"
+					   @bind-value="@Model.ConfirmPassword">
+				<label for="ConfirmPassword">Confirm Password<span class="required">*</span></label>
+			</div>
 
-		<button class="primary-button hover"
-				type="submit"
-				title="Zapisz">
-			Zapisz
-		</button>
-	</fieldset>
-</form>
+			<button class="primary-button hover"
+					type="submit"
+					title="Zapisz">
+				Zapisz
+			</button>
+			<DataAnnotationsValidator />
+			<ValidationSummary />
+		</fieldset>
+	</EditForm>
+</div>
