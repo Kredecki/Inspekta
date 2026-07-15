@@ -18,6 +18,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inspekta.Shared", "Inspekta
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inspekta.Infrastructure", "Inspekta.Infrastructure\Inspekta.Infrastructure.csproj", "{48E2CA77-DF0E-42C0-A0F6-D5F4E7CEE055}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{078D1904-1350-4AF8-BBC3-0A11CC6C898E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inspekta.Infrastructure.Tests", "Inspekta.Infrastructure.Tests\Inspekta.Infrastructure.Tests.csproj", "{B2B3A330-DD66-4206-8876-DB1736A0213B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,9 +48,16 @@ Global
 		{48E2CA77-DF0E-42C0-A0F6-D5F4E7CEE055}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48E2CA77-DF0E-42C0-A0F6-D5F4E7CEE055}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{48E2CA77-DF0E-42C0-A0F6-D5F4E7CEE055}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2B3A330-DD66-4206-8876-DB1736A0213B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2B3A330-DD66-4206-8876-DB1736A0213B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2B3A330-DD66-4206-8876-DB1736A0213B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2B3A330-DD66-4206-8876-DB1736A0213B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B2B3A330-DD66-4206-8876-DB1736A0213B} = {078D1904-1350-4AF8-BBC3-0A11CC6C898E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {12B91E8B-F036-43BA-9A55-5CD805F91F4C}
